@@ -11,7 +11,7 @@ const CityWeather = ({ data, isMetric, cityName }) => {
       : data.Temperature.Imperial.Value;
     information = (
       <div>
-        <h1 className="city-weather-title">{cityName}</h1>
+        <h1 className="city-name-title">{cityName}</h1>
         <h2>{data.WeatherText}</h2>
         <img alt="weather" src={logo} />
         <h2>
@@ -20,7 +20,12 @@ const CityWeather = ({ data, isMetric, cityName }) => {
       </div>
     );
   }
-  return <div className="city-weather shadow-5 white">{information}</div>;
+  return (
+    <div className="city-weather shadow-5 white">
+      <h1>Now</h1>
+      <div className="city-weather-info">{information}</div>
+    </div>
+  );
 };
 
 export default CityWeather;

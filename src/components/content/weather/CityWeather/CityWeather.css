@@ -1,10 +1,25 @@
 .city-weather {
+  background: rgba(37, 87, 161, 0.5);
+  height: 100%;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  justify-content: flex-start;
+  padding-top: 2em;
+}
+.city-weather-title {
+  font-family: "Raleway";
+  margin: 0;
+}
+
+.city-name-title {
+  font-family: "Raleway";
+}
+.city-weather-info {
   /* padding: 1em; */
   display: flex;
   justify-content: center;
   align-items: center;
   font-family: "Roboto", sans-serif;
-  background: rgba(37, 87, 161, 0.5);
-  height: 100%;
   /* background: linear-gradient(90deg, #fc466b 0%, #3f5efb 100%); */
 }
