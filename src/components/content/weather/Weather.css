@@ -6,10 +6,23 @@
   padding-top: 3em;
   padding-bottom: 10em;
 }
+
+.header {
+  background: rgba(66, 105, 242, 1);
+  background: rgba(23, 96, 204, 0.7);
+  background-image: radial-gradient(
+    circle 773px at 2.3% 96.8%,
+    rgba(73, 88, 231, 1) 0%,
+    rgba(77, 19, 124, 0.97) 100.3%
+  );
+  /* border-bottom: 1px solid black; */
+  padding: 1em;
+}
+
 .weather-panel {
-  padding: 3em;
+  /* padding: 3em; */
   border: 3px solid black;
-  width: 80%;
+  width: 70%;
   background: #2196f3;
   background-image: radial-gradient(
     circle farthest-corner at 10% 20%,
@@ -17,12 +30,19 @@
     rgba(66, 105, 242, 1) 90%
   );
   background: linear-gradient(90deg, #fc466b 0%, #3f5efb 100%);
+  /* background-image: linear-gradient(
+    70.6deg,
+    rgba(172, 30, 255, 1) 0.3%,
+    rgba(65, 35, 251, 1) 55.8%,
+    rgba(35, 251, 224, 1) 105.1%
+  ); */
 }
 
 .weather-title {
-  font-family: "Raleway";
-  background: red;
-  margin: 0;
+  font-family: "Russo One";
+  color: white;
+  height: 100%;
+  padding: 1em;
 }
 
 @media (max-width: 1000px) {
