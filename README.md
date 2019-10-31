@@ -1,11 +1,11 @@
-#My Weather
+# My Weather
 
 ### What this project about?
 
 This is a simple weather website.  
 The app uses [accuweather](https://www.accuweather.com/) api to display basic weather forecast.  
-This project was built using the React library.  
-This app was build as part of home task by Herlo.  
+This project was built using the React library,    
+and was build as part of home task by [Herolo](https://herolo.co.il/).  
 [Here is a live demo!](https://my-weather-omri.netlify.com/)
 
 ### How do I start?
