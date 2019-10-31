@@ -1,21 +1,29 @@
 import logo from "../../../assets/images/logo.png";
+import queryString from "query-string";
 
-async function getCityKey(API_KEY, setCityKey) {
-  const res = await fetch(
-    `http://dataservice.accuweather.com/locations/v1/cities/autocomplete?apikey=${API_KEY}`
-  );
-  res
-    .json()
-    .then(res => {
-      console.log("hey");
-      console.log(res);
-      setCityKey("215854");
-      //   setCityData(res[0]);
-    })
-    .catch(err => {
-      console.log(err);
-      setCityKey("215854");
-    });
+async function getCityInfo(API_KEY, cityText, setCityKey, setCityName) {
+  const defaultKey = "215854";
+  console.log(queryString.stringify({ q: cityText }));
+  if (cityText) {
+    const cityTextQuery = queryString.stringify({ q: cityText });
+    const res = await fetch(
+      `http://dataservice.accuweather.com/locations/v1/cities/autocomplete?apikey=${API_KEY}&${cityTextQuery}`
+    );
+    res
+      .json()
+      .then(res => {
+        console.log("hey");
+        console.log(res);
+        setCityKey(res[0].Key);
+        setCityName(res[0].LocalizedName);
+        //   setCityData(res[0]);
+      })
+      .catch(err => {
+        console.log("yo!");
+        console.log(err);
+        setCityKey(defaultKey);
+      });
+  }
 }
 
 async function getCurrentWeather(API_KEY, setCityData, cityKey) {
@@ -72,4 +80,4 @@ const forcatsToDays = (data, setDays) => {
   }
 };
 
-export { getDailyForecasts, getCurrentWeather, getCityKey };
+export { getDailyForecasts, getCurrentWeather, getCityInfo };
