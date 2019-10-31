@@ -3,18 +3,11 @@ import "./Weather.css";
 import SearchBox from "./searcbox/SearchBox";
 import CardList from "./cardlist/CardList";
 import CityWeather from "./CityWeather/CityWeather";
-// import logo from "../../../assets/images/logo.png";
 import { getCurrentWeather, getDailyForecasts, getCityInfo } from "./fetchData";
 import { Grid } from "@material-ui/core";
 
-const API_KEY = "4cYUpfCtkmKMiXocQeCSiF4GRgHVsXHw";
+const API_KEY = "HAlqYHjCEwSEWWecyKx02GmgGoLEavIG";
 const DEFAULT_CITY_KEY = "215854";
-
-// const dayList = [
-//   { id: 1, name: "mondey", tempMin: "1", tempMax: "1" },
-//   { id: 1, name: "sunday", tempMin: "1", tempMax: "1" },
-//   { id: 1, name: "sunday", tempMin: "1", tempMax: "1" }
-// ];
 
 const Weather = () => {
   const [searchfield, setSearchfield] = useState("");
@@ -29,15 +22,15 @@ const Weather = () => {
     getDailyForecasts(API_KEY, setDays, cityKey);
   }, []);
 
-  // useEffect(() => {
-  //   getCityKey(API_KEY, searchfield, setCityKey);
-  // }, [searchfield]);
-
-  const onSearchChange = event => {
-    setSearchfield(event.target.value);
+  const handleSearchSubmit = e => {
+    e.preventDefault();
     getCityInfo(API_KEY, searchfield, setCityKey, setCityName);
     getCurrentWeather(API_KEY, setCityData, cityKey);
     getDailyForecasts(API_KEY, setDays, cityKey);
+  };
+
+  const onSearchChange = event => {
+    setSearchfield(event.target.value);
   };
 
   return (
@@ -52,7 +45,10 @@ const Weather = () => {
               </div>
             </Grid>
             <Grid item xs={12}>
-              <SearchBox searchChange={onSearchChange} />
+              <SearchBox
+                handleSearchSubmit={handleSearchSubmit}
+                searchChange={onSearchChange}
+              />
             </Grid>
           </Grid>
           <Grid item lg={3} xs={12}>
