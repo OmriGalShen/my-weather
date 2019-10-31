@@ -2,7 +2,7 @@ import React from "react";
 import "./CityWeather.css";
 import logo from "../../../../assets/images/logo.png";
 
-const CityWeather = ({ data, isMetric }) => {
+const CityWeather = ({ data, isMetric, cityName }) => {
   const unit = isMetric ? "°C" : "°F";
   let information = "";
   if (data.Temperature) {
@@ -11,6 +11,7 @@ const CityWeather = ({ data, isMetric }) => {
       : data.Temperature.Imperial.Value;
     information = (
       <div>
+        <h1 className="city-weather-title">{cityName}</h1>
         <h2>{data.WeatherText}</h2>
         <img alt="weather" src={logo} />
         <h2>
