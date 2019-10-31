@@ -4,10 +4,10 @@ import SearchBox from "./searcbox/SearchBox";
 import CardList from "./cardlist/CardList";
 import CityWeather from "./CityWeather/CityWeather";
 // import logo from "../../../assets/images/logo.png";
-import { getCurrentWeather, getDailyForecasts, getCityKey } from "./fetchData";
+import { getCurrentWeather, getDailyForecasts, getCityInfo } from "./fetchData";
 import { Grid } from "@material-ui/core";
 
-const API_KEY = "dRfaOkfZ2jp11Clgg6cn7m1i11WLTZEL";
+const API_KEY = "4cYUpfCtkmKMiXocQeCSiF4GRgHVsXHw";
 const DEFAULT_CITY_KEY = "215854";
 
 // const dayList = [
@@ -27,11 +27,17 @@ const Weather = () => {
   useEffect(() => {
     getCurrentWeather(API_KEY, setCityData, cityKey);
     getDailyForecasts(API_KEY, setDays, cityKey);
-    getCityKey(API_KEY, setCityKey);
-  }, [cityKey]);
+  }, []);
+
+  // useEffect(() => {
+  //   getCityKey(API_KEY, searchfield, setCityKey);
+  // }, [searchfield]);
 
   const onSearchChange = event => {
     setSearchfield(event.target.value);
+    getCityInfo(API_KEY, searchfield, setCityKey, setCityName);
+    getCurrentWeather(API_KEY, setCityData, cityKey);
+    getDailyForecasts(API_KEY, setDays, cityKey);
   };
 
   return (
