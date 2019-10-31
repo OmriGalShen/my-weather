@@ -17,3 +17,20 @@
 .weather-title {
   font-family: "Raleway";
 }
+
+@media (max-width: 1200px) {
+  .weather-panel {
+    width: 100%;
+  }
+}
+
+@media (max-width: 600px) {
+  .weather {
+    padding: 0;
+  }
+  .weather-panel {
+    width: 100%;
+    font-size: 1.2em;
+    /* padding-bottom: 50%; */
+  }
+}
