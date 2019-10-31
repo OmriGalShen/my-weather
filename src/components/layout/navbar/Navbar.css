@@ -1,0 +1,36 @@
+.logo {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+.logo-title {
+  text-decoration: none;
+  color: white;
+  font-size: 1.2em;
+  font-family: "lobster", sans-serif;
+}
+
+.logo-img {
+  width: 50px;
+}
+
+#button-list {
+  display: block;
+}
+#drawer-button {
+  display: none;
+}
+#title {
+  display: block;
+}
+@media (max-width: 600px) {
+  #button-list {
+    display: none;
+  }
+  #drawer-button {
+    display: block;
+  }
+  #title {
+    display: block;
+  }
+}
