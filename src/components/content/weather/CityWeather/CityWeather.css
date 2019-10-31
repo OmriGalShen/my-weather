@@ -1,7 +1,10 @@
 .city-weather {
+  /* padding: 1em; */
   display: flex;
   justify-content: center;
+  align-items: center;
   font-family: "Roboto", sans-serif;
-  background: rgba(34, 112, 228, 0.5);
+  background: rgba(37, 87, 161, 0.5);
+  height: 100%;
   /* background: linear-gradient(90deg, #fc466b 0%, #3f5efb 100%); */
 }
