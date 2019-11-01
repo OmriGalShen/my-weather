@@ -11,6 +11,7 @@ import MenuIcon from "@material-ui/icons/Menu";
 import Drawer from "@material-ui/core/Drawer";
 import MenuItem from "@material-ui/core/MenuItem";
 import logo from "../../../assets/images/logo.png";
+import Logo from "../../logo/Logo";
 
 //In order to change style of material ui compontents this jsx styling needs to be used
 const useStyles = makeStyles(theme => ({
@@ -88,10 +89,11 @@ const Navbar = ({ linksList }) => {
             //This is the app logo link
           }
           <Link to="/" style={{ textDecoration: "none" }}>
-            <div className="logo grow">
+            <Logo width={50} />
+            {/* <div className="logo grow">
               <img alt="logo" src={logo} className="logo-img" />
               <p className="logo-title">MyWeather</p>
-            </div>
+            </div> */}
           </Link>
           <Typography className={classes.title}></Typography>
           {
