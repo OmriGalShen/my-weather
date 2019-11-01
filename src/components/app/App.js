@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import "./App.css";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import Grid from "@material-ui/core/Grid";
@@ -15,6 +15,8 @@ const linksList = [
 ];
 
 const App = () => {
+  const [isMetric, setIsMetric] = useState(false);
+
   return (
     <div className="App">
       <Grid container>
@@ -27,16 +29,23 @@ const App = () => {
           <Grid item xs={12}>
             <div className="main-container">
               <Switch>
-                {linksList.map(linkItem => {
-                  return (
-                    <Route
-                      key={linkItem.id}
-                      exact
-                      path={linkItem.path}
-                      component={linkItem.component}
-                    />
-                  );
-                })}
+                <Route
+                  exact
+                  path="/"
+                  render={props => <Weather {...props} isMetric={isMetric} />}
+                />
+                <Route
+                  exact
+                  path="/favorites"
+                  render={props => <Favorites {...props} isMetric={isMetric} />}
+                />
+                <Route
+                  exact
+                  path="/settings"
+                  render={props => (
+                    <Settings {...props} setIsMetric={setIsMetric} />
+                  )}
+                />
               </Switch>
             </div>
           </Grid>
