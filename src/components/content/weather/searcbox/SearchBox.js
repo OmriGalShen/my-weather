@@ -10,6 +10,7 @@ const SearchBox = ({ searchChange, handleSearchSubmit }) => {
         placeholder="search cities.."
         onChange={searchChange}
       />
+      <input className="pa3 ba b--blue bg-lightest-blue" type="submit" />
     </form>
   );
 };
