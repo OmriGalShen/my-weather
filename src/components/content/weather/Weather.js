@@ -8,28 +8,26 @@ import { Grid } from "@material-ui/core";
 import Logo from "../../logo/Logo";
 
 const API_KEY = "HAlqYHjCEwSEWWecyKx02GmgGoLEavIG"; //need to be hidden on production
-const DEFAULT_CITY_KEY = "215854"; // tel aviv default city
+const DEFAULT_CITY = { key: "215854", name: "Tel Aviv", country: "Israel" }; // tel aviv default city
 
 const Weather = ({ isMetric }) => {
   const [searchfield, setSearchfield] = useState("");
   const [days, setDays] = useState([]); //list of 5 days of daily Forecasts
-  const [cityKey, setCityKey] = useState(DEFAULT_CITY_KEY);
   const [cityForecast, setcityForecast] = useState([]);
-  const [cityName, setCityName] = useState("Tel Aviv");
-  const [countryName, setCountryName] = useState("Israel");
+  const [city, setCity] = useState(DEFAULT_CITY);
 
   //called only at the start of the app
   useEffect(() => {
-    setCurrentWeather(API_KEY, setcityForecast, cityKey);
-    setDailyForecasts(API_KEY, setDays, cityKey);
-  }, [cityKey]);
+    setCurrentWeather(API_KEY, setcityForecast, city.key);
+    setDailyForecasts(API_KEY, setDays, city.key);
+  }, [city]);
 
   //user submit new city
   const handleSearchSubmit = e => {
     e.preventDefault();
-    setCityInfo(API_KEY, searchfield, setCityKey, setCityName, setCountryName);
-    setCurrentWeather(API_KEY, setcityForecast, cityKey);
-    setDailyForecasts(API_KEY, setDays, cityKey);
+    setCityInfo(API_KEY, searchfield, setCity);
+    setCurrentWeather(API_KEY, setcityForecast, city.key);
+    setDailyForecasts(API_KEY, setDays, city.key);
   };
 
   const onSearchChange = event => {
@@ -54,12 +52,7 @@ const Weather = ({ isMetric }) => {
           </Grid>
         </Grid>
         <Grid item lg={3} xs={12}>
-          <CityWeather
-            data={cityForecast}
-            cityName={cityName}
-            countryName={countryName}
-            isMetric={isMetric}
-          />
+          <CityWeather data={cityForecast} city={city} isMetric={isMetric} />
         </Grid>
         <Grid item lg={9} xs={12}>
           <CardList days={days} isMetric={isMetric} />

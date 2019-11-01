@@ -1,16 +1,7 @@
-// import logo from "../../../assets/images/logo.png";
 import queryString from "query-string";
-// import { getWeatherImage } from "../WeatherImages/weatherImages";
 import { getWeatherImage } from "../../weatherImages/weatherImages";
 
-async function setCityInfo(
-  API_KEY,
-  cityText,
-  setCityKey,
-  setCityName,
-  setCountryName
-) {
-  const defaultKey = "215854";
+async function setCityInfo(API_KEY, cityText, setCity) {
   if (cityText) {
     const cityTextQuery = queryString.stringify({ q: cityText });
     const res = await fetch(
@@ -19,13 +10,15 @@ async function setCityInfo(
     res
       .json()
       .then(res => {
-        setCityKey(res[0].Key);
-        setCityName(res[0].LocalizedName);
-        setCountryName(res[0].Country.LocalizedName);
+        const newCity = {
+          key: res[0].Key,
+          name: res[0].LocalizedName,
+          country: res[0].Country.LocalizedName
+        };
+        setCity(newCity);
       })
       .catch(err => {
         console.log(err);
-        setCityKey(defaultKey);
       });
   }
 }
