@@ -10,7 +10,6 @@ import IconButton from "@material-ui/core/IconButton";
 import MenuIcon from "@material-ui/icons/Menu";
 import Drawer from "@material-ui/core/Drawer";
 import MenuItem from "@material-ui/core/MenuItem";
-import logo from "../../../assets/images/logo.png";
 import Logo from "../../logo/Logo";
 
 //In order to change style of material ui compontents this jsx styling needs to be used
