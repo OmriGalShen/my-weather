@@ -19,12 +19,9 @@ async function setCityInfo(
     res
       .json()
       .then(res => {
-        console.log("hey");
-        console.log(res);
         setCityKey(res[0].Key);
         setCityName(res[0].LocalizedName);
         setCountryName(res[0].Country.LocalizedName);
-        //   setCityData(res[0]);
       })
       .catch(err => {
         console.log(err);
