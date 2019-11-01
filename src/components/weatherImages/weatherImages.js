@@ -1,4 +1,4 @@
-import logo from "../../assets/images/logo.png";
+import logo from "../../assets/images/logo-01.png";
 
 const getWeatherImage = iconNumber => {
   // console.log(iconNumber);

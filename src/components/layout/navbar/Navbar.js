@@ -88,7 +88,9 @@ const Navbar = ({ linksList }) => {
             //This is the app logo link
           }
           <Link to="/" style={{ textDecoration: "none" }}>
-            <Logo width={50} />
+            <div>
+              <p className="navbar-title grow">MyWeather</p>
+            </div>
             {/* <div className="logo grow">
               <img alt="logo" src={logo} className="logo-img" />
               <p className="logo-title">MyWeather</p>

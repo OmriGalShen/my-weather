@@ -1,3 +1,10 @@
+.navbar-title {
+  text-decoration: none;
+  color: white;
+  font-size: 1.2em;
+  font-family: "lobster", sans-serif;
+}
+
 #button-list {
   display: block;
 }

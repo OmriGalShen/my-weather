@@ -41,7 +41,7 @@ const Weather = ({ isMetric }) => {
       <Grid container>
         <Grid item xs={12} className="header shadow-5">
           <Grid item xs={12}>
-            <Logo width={100} />
+            <Logo width={150} />
             <p className="weather-description">
               A simple and elegant weather app!
             </p>

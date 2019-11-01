@@ -15,7 +15,7 @@ const linksList = [
 ];
 
 const App = () => {
-  const [isMetric, setIsMetric] = useState(false);
+  const [isMetric, setIsMetric] = useState(true);
 
   return (
     <div className="App">

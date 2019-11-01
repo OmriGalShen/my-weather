@@ -4,14 +4,14 @@ import "./Logo.css";
 
 const Logo = ({ width }) => {
   return (
-    <div className="logo grow">
+    <div className="logo">
       <img
         alt="logo"
         src={LogoImage}
         className="logo-img"
         style={{ width: width }}
       />
-      <p className="logo-title">MyWeather</p>
+      {/* <p className="logo-title">MyWeather</p> */}
     </div>
   );
 };
