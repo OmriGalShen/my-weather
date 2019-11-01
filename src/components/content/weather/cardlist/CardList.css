@@ -1,5 +1,6 @@
 .card-list {
   background: rgba(0, 0, 0, 0.5);
+  height: 100%;
 }
 
 .card-list-title {
