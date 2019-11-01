@@ -1,9 +1,16 @@
-import logo from "../../../assets/images/logo.png";
+// import logo from "../../../assets/images/logo.png";
 import queryString from "query-string";
+// import { getWeatherImage } from "../WeatherImages/weatherImages";
+import { getWeatherImage } from "../../weatherImages/weatherImages";
 
-async function getCityInfo(API_KEY, cityText, setCityKey, setCityName) {
+async function getCityInfo(
+  API_KEY,
+  cityText,
+  setCityKey,
+  setCityName,
+  setCountryName
+) {
   const defaultKey = "215854";
-  console.log(queryString.stringify({ q: cityText }));
   if (cityText) {
     const cityTextQuery = queryString.stringify({ q: cityText });
     const res = await fetch(
@@ -16,10 +23,10 @@ async function getCityInfo(API_KEY, cityText, setCityKey, setCityName) {
         console.log(res);
         setCityKey(res[0].Key);
         setCityName(res[0].LocalizedName);
+        setCountryName(res[0].Country.LocalizedName);
         //   setCityData(res[0]);
       })
       .catch(err => {
-        console.log("yo!");
         console.log(err);
         setCityKey(defaultKey);
       });
@@ -70,7 +77,7 @@ const forcatsToDays = (data, setDays) => {
       let dayName = new Date(dailyForecasts[i].Date);
       myList.push({
         id: i,
-        image: logo,
+        image: getWeatherImage(dailyForecasts[i].Day.Icon),
         name: getWeekDayName(dayName),
         tempMin: dailyForecasts[i].Temperature.Minimum.Value,
         tempMax: dailyForecasts[i].Temperature.Maximum.Value
