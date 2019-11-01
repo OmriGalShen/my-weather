@@ -24,3 +24,9 @@
   font-family: "Roboto", sans-serif;
   /* background: linear-gradient(90deg, #fc466b 0%, #3f5efb 100%); */
 }
+
+@media (max-width: 600px) {
+  .city-weather {
+    padding-bottom: 3em;
+  }
+}
