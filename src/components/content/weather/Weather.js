@@ -15,6 +15,7 @@ const Weather = () => {
   const [days, setDays] = useState([]);
   const [cityData, setCityData] = useState([]);
   const [cityName, setCityName] = useState("Tel-Aviv");
+  const [countryName, setCountryName] = useState("Israel");
   const [isMetric, setIsMetric] = useState(true);
 
   useEffect(() => {
@@ -24,7 +25,7 @@ const Weather = () => {
 
   const handleSearchSubmit = e => {
     e.preventDefault();
-    getCityInfo(API_KEY, searchfield, setCityKey, setCityName);
+    getCityInfo(API_KEY, searchfield, setCityKey, setCityName, setCountryName);
     getCurrentWeather(API_KEY, setCityData, cityKey);
     getDailyForecasts(API_KEY, setDays, cityKey);
   };
@@ -55,6 +56,7 @@ const Weather = () => {
             <CityWeather
               data={cityData}
               cityName={cityName}
+              countryName={countryName}
               isMetric={isMetric}
             />
           </Grid>
