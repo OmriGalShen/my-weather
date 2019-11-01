@@ -3,7 +3,7 @@ import queryString from "query-string";
 // import { getWeatherImage } from "../WeatherImages/weatherImages";
 import { getWeatherImage } from "../../weatherImages/weatherImages";
 
-async function getCityInfo(
+async function setCityInfo(
   API_KEY,
   cityText,
   setCityKey,
@@ -33,7 +33,7 @@ async function getCityInfo(
   }
 }
 
-async function getCurrentWeather(API_KEY, setCityData, cityKey) {
+async function setCurrentWeather(API_KEY, setCityData, cityKey) {
   const res = await fetch(
     `http://dataservice.accuweather.com/currentconditions/v1/${cityKey}.json?apikey=${API_KEY}`
   );
@@ -44,7 +44,7 @@ async function getCurrentWeather(API_KEY, setCityData, cityKey) {
     })
     .catch(err => console.log);
 }
-async function getDailyForecasts(API_KEY, setDays, cityKey) {
+async function setDailyForecasts(API_KEY, setDays, cityKey) {
   const res = await fetch(
     `http://dataservice.accuweather.com/forecasts/v1/daily/5day/${cityKey}.json?apikey=${API_KEY}`
   );
@@ -87,4 +87,4 @@ const forcatsToDays = (data, setDays) => {
   }
 };
 
-export { getDailyForecasts, getCurrentWeather, getCityInfo };
+export { setDailyForecasts, setCurrentWeather, setCityInfo };
