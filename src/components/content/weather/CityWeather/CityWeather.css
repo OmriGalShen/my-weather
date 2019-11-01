@@ -6,6 +6,7 @@
   flex-direction: column;
   justify-content: flex-start;
   padding: 2em;
+  padding-bottom: 10em;
 }
 .city-weather-title {
   font-family: "Raleway";
