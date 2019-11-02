@@ -1,13 +1,5 @@
-/* .weather {
-  display: flex;
-  justify-content: center;
-  width: 100%;
-  height: 100%;
-  padding-top: 3em;
-  padding-bottom: 10em;
-} */
-
 .header {
+  padding: 1em;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -19,7 +11,6 @@
     rgba(73, 88, 231, 1) 0%,
     rgba(77, 19, 124, 0.97) 100.3%
   );
-  /* border-bottom: 1px solid black; */
 }
 
 .weather-description {
@@ -28,11 +19,10 @@
 }
 
 .weather-panel {
-  /* padding: 3em; */
   display: flex;
   justify-content: center;
   width: 100%;
-  /* padding-bottom: 8em; */
+  height: 100%;
   border: 3px solid black;
   background: #2196f3;
   background-image: radial-gradient(
@@ -41,12 +31,6 @@
     rgba(66, 105, 242, 1) 90%
   );
   background: linear-gradient(90deg, #fc466b 0%, #3f5efb 100%);
-  /* background-image: linear-gradient(
-    70.6deg,
-    rgba(172, 30, 255, 1) 0.3%,
-    rgba(65, 35, 251, 1) 55.8%,
-    rgba(35, 251, 224, 1) 105.1%
-  ); */
 }
 
 .weather-title {
@@ -70,6 +54,5 @@
   .weather-panel {
     width: 100%;
     font-size: 1.2em;
-    /* padding-bottom: 50%; */
   }
 }

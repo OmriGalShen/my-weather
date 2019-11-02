@@ -1,14 +1,24 @@
-.html {
-  padding: 0;
-  margin: 0;
+.navbar {
+  height: 5vh;
 }
+
+.main-container {
+  min-height: 90vh;
+  background-image: radial-gradient(
+    circle 773px at 2.3% 96.8%,
+    rgba(73, 88, 231, 1) 0%,
+    rgba(77, 19, 124, 0.97) 100.3%
+  );
+}
+
+.footer {
+  height: 5vh;
+  margin: 0;
+  padding: 0;
+}
+
 .App {
   text-align: center;
-  /* background-image: linear-gradient(
-    91.9deg,
-    rgba(93, 248, 219, 1) 27.8%,
-    rgba(33, 228, 246, 1) 67%
-  ); */
   background-image: linear-gradient(
     91.9deg,
     rgba(93, 248, 219, 1) 27.8%,
@@ -31,4 +41,13 @@
     rgba(65, 35, 251, 1) 55.8%,
     rgba(35, 251, 224, 1) 105.1%
   );
+}
+
+@media (max-width: 600px) {
+  .main-container {
+    min-height: 80vh;
+  }
+  .footer {
+    min-height: 10vh;
+  }
 }
