@@ -7,7 +7,7 @@ const Card = props => {
   let symbol = isMetric ? "°C" : "°F";
 
   return (
-    <div className="card bg-light-blue dib br3 pa3 ma2 grow bw2 shadow-5">
+    <div className="card bg-light-blue dib br3 pa2 ma2 grow bw2 shadow-5">
       <img src={image} alt="profil pic" />
       <div>
         <h2>{name}</h2>
