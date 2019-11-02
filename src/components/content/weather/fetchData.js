@@ -12,7 +12,7 @@ async function setCityInfo(
   if (cityText.length > 0) {
     const cityTextQuery = queryString.stringify({ q: cityText });
     const res = await fetch(
-      `http://dataservice.accuweather.com/locations/v1/cities/autocomplete?apikey=${API_KEY}&${cityTextQuery}`
+      `https://dataservice.accuweather.com/locations/v1/cities/autocomplete?apikey=${API_KEY}&${cityTextQuery}`
     );
     res
       .json()
@@ -44,7 +44,7 @@ async function setCityInfo(
 
 async function setCurrentWeather(API_KEY, setCityData, cityKey) {
   const res = await fetch(
-    `http://dataservice.accuweather.com/currentconditions/v1/${cityKey}.json?apikey=${API_KEY}`
+    `https://dataservice.accuweather.com/currentconditions/v1/${cityKey}.json?apikey=${API_KEY}`
   );
   res
     .json()
@@ -55,7 +55,7 @@ async function setCurrentWeather(API_KEY, setCityData, cityKey) {
 }
 async function setDailyForecasts(API_KEY, setDays, cityKey) {
   const res = await fetch(
-    `http://dataservice.accuweather.com/forecasts/v1/daily/5day/${cityKey}.json?apikey=${API_KEY}`
+    `https://dataservice.accuweather.com/forecasts/v1/daily/5day/${cityKey}.json?apikey=${API_KEY}`
   );
   res
     .json()
