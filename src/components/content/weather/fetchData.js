@@ -1,8 +1,15 @@
 import queryString from "query-string";
 import { getWeatherImage } from "../../weatherImages/weatherImages";
 
-async function setCityInfo(API_KEY, cityText, city, setCity, favCities) {
-  if (cityText) {
+async function setCityInfo(
+  API_KEY,
+  cityText,
+  city,
+  setCity,
+  favCities,
+  displayError
+) {
+  if (cityText.length > 0) {
     const cityTextQuery = queryString.stringify({ q: cityText });
     const res = await fetch(
       `http://dataservice.accuweather.com/locations/v1/cities/autocomplete?apikey=${API_KEY}&${cityTextQuery}`
@@ -30,6 +37,7 @@ async function setCityInfo(API_KEY, cityText, city, setCity, favCities) {
       })
       .catch(err => {
         console.log(err);
+        displayError("City wasn't found");
       });
   }
 }

@@ -6,6 +6,7 @@ import CityWeather from "./CityWeather/CityWeather";
 import { setCurrentWeather, setDailyForecasts, setCityInfo } from "./fetchData";
 import { Grid } from "@material-ui/core";
 import Logo from "../../logo/Logo";
+import { Snackbar } from "@material-ui/core";
 
 const API_KEY = "ukNB5zcIFeb6lFYAHPPeZbxZZNbnWuq4"; //need to be hidden on production
 
@@ -14,6 +15,8 @@ const Weather = props => {
   const [searchfield, setSearchfield] = useState("");
   const [days, setDays] = useState([]); //list of 5 days of daily Forecasts
   const [cityForecast, setcityForecast] = useState([]);
+  const [openToast, setOpenToast] = useState(false);
+  const [errorMessage, setErrorMessage] = useState("");
 
   //called only at the start of the app
   useEffect(() => {
@@ -24,9 +27,31 @@ const Weather = props => {
   //user submit new city
   const handleSearchSubmit = e => {
     e.preventDefault();
-    setCityInfo(API_KEY, searchfield, city, setCity, favCities);
+    let foundCity = setCityInfo(
+      API_KEY,
+      searchfield,
+      city,
+      setCity,
+      favCities,
+      displayError
+    );
+    if (!foundCity) displayError("Test!");
+
     setCurrentWeather(API_KEY, setcityForecast, city.key);
     setDailyForecasts(API_KEY, setDays, city.key);
+  };
+
+  const displayError = message => {
+    setErrorMessage(message);
+    setOpenToast(true);
+  };
+
+  const handleClose = (event, reason) => {
+    if (reason === "clickaway") {
+      return;
+    }
+
+    setOpenToast(false);
   };
 
   const onSearchChange = event => {
@@ -62,6 +87,16 @@ const Weather = props => {
           <CardList days={days} isMetric={isMetric} />
         </Grid>
       </Grid>
+      <Snackbar
+        anchorOrigin={{
+          vertical: "bottom",
+          horizontal: "center"
+        }}
+        open={openToast}
+        autoHideDuration={3000}
+        onClose={handleClose}
+        message={<p>{errorMessage}</p>}
+      />
     </div>
   );
 };
