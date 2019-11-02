@@ -1,12 +1,15 @@
-.city-weather {
+.city-weather-wrapper {
   background: rgba(37, 87, 161, 0.5);
   height: 100%;
+  padding: 2em;
+  padding-bottom: 5em;
+}
+
+.city-weather {
   display: flex;
   align-items: center;
   flex-direction: column;
   justify-content: flex-start;
-  padding: 2em;
-  padding-bottom: 5em;
 }
 .city-weather-title {
   font-family: "Raleway";
