@@ -1,16 +1,19 @@
 import React from "react";
 import "./SearchBox.css";
+import { Button } from "@material-ui/core";
 
 const SearchBox = ({ searchChange, handleSearchSubmit }) => {
   return (
     <form className="searchbox" onSubmit={handleSearchSubmit}>
       <input
-        className="pa3 ba b--green bg-lightest-blue"
+        className="pa2 ba b--green bg-lightest-blue"
         type="search"
         placeholder="search cities.."
         onChange={searchChange}
       />
-      <input className="pa3 ba b--blue bg-lightest-blue" type="submit" />
+      <Button variant="contained" color="primary" type="submit" size="medium">
+        search
+      </Button>
     </form>
   );
 };
