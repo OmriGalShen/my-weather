@@ -2,3 +2,8 @@
   display: flex;
   font-family: "Roboto", sans-serif;
 }
+@media (max-width: 600px) {
+  .card {
+    font-size: 0.8em;
+  }
+}
