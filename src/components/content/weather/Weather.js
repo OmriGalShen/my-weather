@@ -7,14 +7,13 @@ import { setCurrentWeather, setDailyForecasts, setCityInfo } from "./fetchData";
 import { Grid } from "@material-ui/core";
 import Logo from "../../logo/Logo";
 
-const API_KEY = "HAlqYHjCEwSEWWecyKx02GmgGoLEavIG"; //need to be hidden on production
-const DEFAULT_CITY = { key: "215854", name: "Tel Aviv", country: "Israel" }; // tel aviv default city
+const API_KEY = "ukNB5zcIFeb6lFYAHPPeZbxZZNbnWuq4"; //need to be hidden on production
 
-const Weather = ({ isMetric }) => {
+const Weather = props => {
+  const { isMetric, city, setCity, handleFavorite, favCities } = props;
   const [searchfield, setSearchfield] = useState("");
   const [days, setDays] = useState([]); //list of 5 days of daily Forecasts
   const [cityForecast, setcityForecast] = useState([]);
-  const [city, setCity] = useState(DEFAULT_CITY);
 
   //called only at the start of the app
   useEffect(() => {
@@ -25,7 +24,7 @@ const Weather = ({ isMetric }) => {
   //user submit new city
   const handleSearchSubmit = e => {
     e.preventDefault();
-    setCityInfo(API_KEY, searchfield, setCity);
+    setCityInfo(API_KEY, searchfield, city, setCity, favCities);
     setCurrentWeather(API_KEY, setcityForecast, city.key);
     setDailyForecasts(API_KEY, setDays, city.key);
   };
@@ -52,7 +51,12 @@ const Weather = ({ isMetric }) => {
           </Grid>
         </Grid>
         <Grid item lg={3} xs={12}>
-          <CityWeather data={cityForecast} city={city} isMetric={isMetric} />
+          <CityWeather
+            data={cityForecast}
+            city={city}
+            isMetric={isMetric}
+            handleFavorite={handleFavorite}
+          />
         </Grid>
         <Grid item lg={9} xs={12}>
           <CardList days={days} isMetric={isMetric} />
