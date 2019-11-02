@@ -6,6 +6,11 @@ import Favorites from "../content/favorites/Favorites";
 import Settings from "../content/settings/Settings";
 import Navbar from "../layout/navbar/Navbar";
 import Footer from "../layout/footer/Footer";
+import {
+  favoritesAdd,
+  favoritesRemove,
+  updateFavoriteStatus
+} from "./favoriteCity";
 
 const linksList = [
   { id: "1", name: "Home", path: "/", component: Weather },
@@ -37,19 +42,19 @@ const App = () => {
   const [favCities, setFavCities] = useState(DEFAULT_FAV_CITIES);
 
   const handleFavorite = e => {
-    let favCitiesCopy = favCities.slice();
-    let cityCopy = Object.assign({}, city);
     // remove city from favorites
     if (city.isFavorite) {
-      favCitiesCopy = favCitiesCopy.filter(favCity => favCity.key !== city.key);
+      favoritesRemove(city, favCities, setFavCities);
     }
     // add city to favorites
     else {
-      favCitiesCopy.push(cityCopy);
+      favoritesAdd(city, favCities, setFavCities);
     }
-    setFavCities(favCitiesCopy);
-    // update city's Favorite property
-    cityCopy.isFavorite = !city.isFavorite;
+    updateFavoriteStatus(city, setCity);
+  };
+
+  const hundleCityChoose = favCity => {
+    let cityCopy = Object.assign({}, favCity);
     setCity(cityCopy);
   };
 
@@ -78,7 +83,16 @@ const App = () => {
             <Route
               exact
               path="/favorites"
-              render={props => <Favorites {...props} isMetric={isMetric} />}
+              render={props => (
+                <Favorites
+                  {...props}
+                  favCities={favCities}
+                  setFavCities={setFavCities}
+                  hundleCityChoose={hundleCityChoose}
+                  cityKey={city.key}
+                  favoritesRemove={favoritesRemove}
+                />
+              )}
             />
             <Route
               exact
