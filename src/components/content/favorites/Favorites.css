@@ -13,6 +13,15 @@
   padding: 3em;
   width: 80%;
 }
+.favorites-panel {
+  padding: 3em;
+  border: 3px solid black;
+  width: 80%;
+  min-height: 80vh;
+  color: white;
+  background: #2196f3;
+  background: rgba(37, 87, 161, 0.5);
+}
 .favorites-header {
   display: flex;
   flex-direction: row;
@@ -32,22 +41,12 @@
   font-size: 1.5em;
 }
 
-.favorites-panel {
-  padding: 3em;
-  border: 3px solid black;
-  width: 80%;
-  height: 80vh;
-  color: white;
-  background: #2196f3;
-  background: rgba(37, 87, 161, 0.5);
-}
-
 @media (max-width: 600px) {
   .favorites {
     width: 100%;
-    height: 85vh;
+    min-height: 80vh;
+    font-size: 0.8em;
     padding: 0;
-    /* height: 90vh; */
   }
   .favorites-panel {
     border: none;

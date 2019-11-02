@@ -9,7 +9,7 @@ import {
 } from "@material-ui/core";
 import LocationCityIcon from "@material-ui/icons/LocationCity";
 import DeleteIcon from "@material-ui/icons/Delete";
-import FavoriteBorderIcon from "@material-ui/icons/FavoriteBorder";
+import FavoriteIcon from "@material-ui/icons/Favorite";
 
 const Favorites = ({
   favCities,
@@ -22,7 +22,7 @@ const Favorites = ({
     <div className="favorites shaodw-5">
       <div className="favorites-panel shadow-5">
         <div className="favorites-header">
-          <FavoriteBorderIcon fontSize="large" />
+          <FavoriteIcon fontSize="large" />
           <h1 className="favorites-title">Favorites</h1>
         </div>
 
