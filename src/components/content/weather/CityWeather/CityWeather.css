@@ -26,8 +26,19 @@
   font-family: "Roboto", sans-serif;
 }
 
+@media (max-width: 1200px) {
+  .city-weather {
+    padding: 1em;
+  }
+}
+
 @media (max-width: 600px) {
   .city-weather {
-    padding-bottom: 3em;
+    font-size: 0.8em;
+    padding: 1em 0 0 0;
+  }
+
+  .city-weather-wrapper {
+    padding: 0;
   }
 }
