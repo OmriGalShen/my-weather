@@ -10,20 +10,23 @@ async function setCityInfo(API_KEY, cityText, city, setCity, favCities) {
     res
       .json()
       .then(res => {
-        let newCity = Object.assign({}, city); //make of copy of the city
-        //gives the copy the new data
-        newCity.key = res[0].Key;
-        newCity.name = res[0].LocalizedName;
-        newCity.country = res[0].Country.LocalizedName;
-        newCity.isFavorite = false;
-        //search if the found city is in favorites
-        for (let favCity of favCities) {
-          //if found city is in favorites
-          if (favCity.key === res[0].Key) {
-            newCity.isFavorite = true;
+        //city was found
+        if (res[0]) {
+          let newCity = Object.assign({}, city); //make of copy of the city
+          //gives the copy the new data
+          newCity.key = res[0].Key;
+          newCity.name = res[0].LocalizedName;
+          newCity.country = res[0].Country.LocalizedName;
+          newCity.isFavorite = false;
+          //search if the found city is in favorites
+          for (let favCity of favCities) {
+            //if found city is in favorites
+            if (favCity.key === res[0].Key) {
+              newCity.isFavorite = true;
+            }
           }
-        }
-        setCity(newCity);
+          setCity(newCity);
+        } else throw new Error("city wasn't found");
       })
       .catch(err => {
         console.log(err);
