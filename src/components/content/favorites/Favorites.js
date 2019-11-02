@@ -13,7 +13,7 @@ import DeleteIcon from "@material-ui/icons/Delete";
 const Favorites = ({
   favCities,
   setFavCities,
-  hundleCityChoose,
+  handleCityChoose,
   cityKey,
   favoritesRemove
 }) => {
@@ -31,7 +31,7 @@ const Favorites = ({
               <ListItem
                 button
                 key={index}
-                onClick={() => hundleCityChoose(favCity)}
+                onClick={() => handleCityChoose(favCity)}
                 selected={favCity.key === cityKey}
               >
                 <ListItemIcon>

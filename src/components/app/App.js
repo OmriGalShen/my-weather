@@ -53,9 +53,13 @@ const App = () => {
     updateFavoriteStatus(city, setCity);
   };
 
-  const hundleCityChoose = favCity => {
+  const handleCityChoose = favCity => {
     let cityCopy = Object.assign({}, favCity);
     setCity(cityCopy);
+  };
+
+  const handleUnitChange = () => {
+    setIsMetric(!isMetric);
   };
 
   return (
@@ -88,7 +92,7 @@ const App = () => {
                   {...props}
                   favCities={favCities}
                   setFavCities={setFavCities}
-                  hundleCityChoose={hundleCityChoose}
+                  handleCityChoose={handleCityChoose}
                   cityKey={city.key}
                   favoritesRemove={favoritesRemove}
                 />
@@ -98,7 +102,11 @@ const App = () => {
               exact
               path="/settings"
               render={props => (
-                <Settings {...props} setIsMetric={setIsMetric} />
+                <Settings
+                  {...props}
+                  isMetric={isMetric}
+                  handleUnitChange={handleUnitChange}
+                />
               )}
             />
           </Switch>
