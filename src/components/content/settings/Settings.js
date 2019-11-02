@@ -9,18 +9,22 @@ import {
   FormControlLabel
 } from "@material-ui/core";
 import AcUnitIcon from "@material-ui/icons/AcUnit";
+import SettingAplicationsIcon from "@material-ui/icons/SettingsApplications";
 
 const Settings = ({ isMetric, handleUnitChange }) => {
   return (
     <div className="settings">
       <div className="settings-panel shadow-5">
-        <h1 className="settings-title">Settings</h1>
+        <div className="settings-header">
+          <SettingAplicationsIcon fontSize="large" />
+          <h1 className="settings-title">Settings</h1>
+        </div>
         <p className="settings-description">
-          View and manage your favorite cities!
+          Change settings according to your needs!
         </p>
         <div className="setting-list">
           <List component="nav" aria-label="settings list"></List>
-          <ListItem button>
+          <ListItem button selected={true}>
             <ListItemIcon>
               <AcUnitIcon style={{ color: "white" }} />
             </ListItemIcon>

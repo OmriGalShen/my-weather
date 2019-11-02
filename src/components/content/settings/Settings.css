@@ -13,7 +13,16 @@
   padding: 3em;
   width: 80%;
 }
+
+.settings-header {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
 .settings-title {
+  padding-left: 1em;
+  padding-right: 1em;
   font-family: "Raleway", sans-serif;
   text-decoration: underline;
 }
@@ -42,6 +51,7 @@
     rgba(60, 55, 106, 1) 8.5%,
     rgba(23, 20, 69, 1) 82.4%
   );
+  background: rgba(3, 18, 39, 0.5);
 }
 
 @media (max-width: 600px) {
