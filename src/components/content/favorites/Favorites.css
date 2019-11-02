@@ -13,7 +13,16 @@
   padding: 3em;
   width: 80%;
 }
+.favorites-header {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+}
+
 .favorites-title {
+  padding-left: 1em;
+  padding-right: 1em;
   font-family: "Raleway", sans-serif;
   text-decoration: underline;
 }
