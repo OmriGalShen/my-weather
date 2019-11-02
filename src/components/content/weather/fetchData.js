@@ -1,7 +1,7 @@
 import queryString from "query-string";
 import { getWeatherImage } from "../../weatherImages/weatherImages";
 
-async function setCityInfo(API_KEY, cityText, setCity) {
+async function setCityInfo(API_KEY, cityText, city, setCity, favCities) {
   if (cityText) {
     const cityTextQuery = queryString.stringify({ q: cityText });
     const res = await fetch(
@@ -10,11 +10,19 @@ async function setCityInfo(API_KEY, cityText, setCity) {
     res
       .json()
       .then(res => {
-        const newCity = {
-          key: res[0].Key,
-          name: res[0].LocalizedName,
-          country: res[0].Country.LocalizedName
-        };
+        let newCity = Object.assign({}, city); //make of copy of the city
+        //gives the copy the new data
+        newCity.key = res[0].Key;
+        newCity.name = res[0].LocalizedName;
+        newCity.country = res[0].Country.LocalizedName;
+        newCity.isFavorite = false;
+        //search if the found city is in favorites
+        for (let favCity of favCities) {
+          //if found city is in favorites
+          if (favCity.key === res[0].Key) {
+            newCity.isFavorite = true;
+          }
+        }
         setCity(newCity);
       })
       .catch(err => {
