@@ -8,12 +8,11 @@
 }
 
 .card-list-grid {
-  display: flex;
-  /* display: grid; */
+  display: grid;
   /* grid-column-gap: 10px; */
   /* grid-row-gap: 15px; */
   /* justify-content: space-around; */
 
-  /* align-items: end;
-  grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); */
+  align-items: end;
+  grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
 }
