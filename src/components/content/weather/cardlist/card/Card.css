@@ -1,6 +1,6 @@
 .card {
   display: flex;
-  font-family: "Roboto", sans-serif;
+  font-family: "Lobster", sans-serif;
 }
 @media (max-width: 600px) {
   .card {
