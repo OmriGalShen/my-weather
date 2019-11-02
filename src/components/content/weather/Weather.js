@@ -2,8 +2,12 @@ import React, { useState, useEffect } from "react";
 import "./Weather.css";
 import SearchBox from "./searcbox/SearchBox";
 import CardList from "./cardlist/CardList";
-import CityWeather from "./CityWeather/CityWeather";
-import { setCurrentWeather, setDailyForecasts, setCityInfo } from "./fetchData";
+import CityWeather from "./cityWeather/CityWeather";
+import {
+  setCurrentWeather,
+  setDailyForecasts,
+  setCityInfo
+} from "./utilityData";
 import { Grid } from "@material-ui/core";
 import Logo from "../../logo/Logo";
 import { Snackbar } from "@material-ui/core";

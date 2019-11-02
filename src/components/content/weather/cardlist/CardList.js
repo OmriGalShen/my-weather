@@ -1,5 +1,5 @@
 import React from "react";
-import Card from "../card/Card.js";
+import Card from "./card/Card";
 import "./CardList.css";
 
 const CardList = ({ days, isMetric }) => {
