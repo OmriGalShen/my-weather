@@ -32,11 +32,11 @@ const App = () => {
   //user clicked to change favorite status of current city
   const handleFavorite = e => {
     if (city.isFavorite) {
-      favoritesRemove(city, favCities, setFavCities);
+      favoritesRemove(city, favCities, handleSetFavCities);
     } else {
-      favoritesAdd(city, favCities, setFavCities);
+      favoritesAdd(city, favCities, handleSetFavCities);
     }
-    updateFavoriteStatus(city, setCity);
+    updateFavoriteStatus(city, handleSetCity);
   };
 
   //change current city
