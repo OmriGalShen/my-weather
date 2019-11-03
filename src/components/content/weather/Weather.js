@@ -40,18 +40,20 @@ const Weather = props => {
 
   //user submit new city
   const handleSearchSubmit = e => {
-    setSearchfield(e.target[0].value);
-    let userInput = e.target[0].value;
-    e.preventDefault();
-    setCityInfo(
-      API_KEY,
-      userInput,
-      city,
-      handleSetCity,
-      favCities,
-      displayError
-    );
-    updateWeatherCallback();
+    if (e.target[0]) {
+      setSearchfield(e.target[0].value);
+      let userInput = e.target[0].value;
+      e.preventDefault();
+      setCityInfo(
+        API_KEY,
+        userInput,
+        city,
+        handleSetCity,
+        favCities,
+        displayError
+      );
+      updateWeatherCallback();
+    }
   };
 
   //change daily forecast list
