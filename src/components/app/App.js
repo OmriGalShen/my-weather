@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import "./App.css";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import Weather from "../content/weather/Weather";
@@ -11,6 +11,7 @@ import {
   favoritesRemove,
   updateFavoriteStatus
 } from "./favoriteCity";
+import { setCityWithLocation } from "./utility";
 import {
   API_KEY,
   DEFAULT_CITY,
@@ -28,6 +29,17 @@ const App = () => {
   const [isMetric, setIsMetric] = useState(true); //state of units
   const [city, setCity] = useState(DEFAULT_CITY); //current city
   const [favCities, setFavCities] = useState(DEFAULT_FAV_CITIES); //list of favorite cities
+
+  useEffect(() => {
+    if ("geolocation" in navigator) {
+      navigator.geolocation.getCurrentPosition(function(position) {
+        setCityWithLocation(API_KEY, city, position, handleSetCity, favCities);
+      });
+    } else {
+      console.log("didn't get location");
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   //user clicked to change favorite status of current city
   const handleFavorite = e => {
@@ -47,7 +59,7 @@ const App = () => {
 
   //change current favorite cities list
   const handleSetFavCities = newFavCities => {
-    let favCitiesCopy = newFavCities.splice();
+    let favCitiesCopy = [...newFavCities];
     setFavCities(favCitiesCopy);
   };
 
