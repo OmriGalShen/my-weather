@@ -43,7 +43,7 @@
 }
 
 .setting-list {
-  width: 50vh;
+  width: 50%;
 }
 
 @media (max-width: 600px) {
@@ -51,6 +51,9 @@
     width: 100%;
     font-size: 0.8em;
     padding: 0;
+  }
+  .setting-list {
+    width: 90%;
   }
   .settings-panel {
     min-height: 90vh;
