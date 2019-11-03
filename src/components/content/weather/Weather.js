@@ -79,7 +79,7 @@ const Weather = props => {
             />
           </Grid>
         </Grid>
-        <Grid item lg={3} xs={12}>
+        <Grid item md={3} xs={12}>
           <CityWeather
             data={cityForecast}
             city={city}
@@ -87,7 +87,7 @@ const Weather = props => {
             handleFavorite={handleFavorite}
           />
         </Grid>
-        <Grid item lg={9} xs={12}>
+        <Grid item md={9} xs={12}>
           <CardList days={days} isMetric={isMetric} />
         </Grid>
       </Grid>

@@ -40,7 +40,7 @@ const Favorites = ({
                 selected={favCity.key === cityKey}
               >
                 <ListItemIcon>
-                  <LocationCityIcon style={{ color: "white" }} />
+                  <LocationCityIcon style={{ color: "#2196f3" }} />
                 </ListItemIcon>
                 <ListItemText primary={itemText} style={{ color: "white" }} />
 
