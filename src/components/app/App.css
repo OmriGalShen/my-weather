@@ -1,5 +1,5 @@
 .navbar {
-  height: 5vh;
+  min-height: 4vh;
 }
 
 .main-container {
@@ -12,7 +12,7 @@
 }
 
 .footer {
-  height: 5vh;
+  min-height: 5vh;
   margin: 0;
   padding: 0;
 }
