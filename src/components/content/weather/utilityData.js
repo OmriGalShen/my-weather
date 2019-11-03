@@ -119,10 +119,10 @@ const autoCompleteList = async (API_KEY, cityName, handleSetFilteredCities) => {
       .json()
       .then(res => {
         //autocomplete found
-        if (res[0]) handleSetFilteredCities(res);
+        if (res[0].LocalizedName) handleSetFilteredCities(res);
       })
       .catch(err => {
-        console.log(err);
+        console.log("autoCompleteList:" + err);
       });
   }
 };
