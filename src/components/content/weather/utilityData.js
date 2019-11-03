@@ -23,8 +23,8 @@ async function setCityInfo(
         let newCity = Object.assign({}, city); //make of copy of the city
         //gives the copy the new data
         newCity.key = res[0].Key;
-        newCity.name = res[0].EnglishName;
-        newCity.country = res[0].Country.EnglishName;
+        newCity.name = res[0].LocalizedName;
+        newCity.country = res[0].Country.LocalizedName;
         newCity.isFavorite = false;
         //search if the found city is in favorites
         for (let favCity of favCities) {
