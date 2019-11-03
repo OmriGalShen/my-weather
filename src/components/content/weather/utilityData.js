@@ -62,7 +62,13 @@ async function setCurrentWeather(
       console.log(err);
     });
 }
-async function setDailyWeather(API_KEY, handleSetDays, cityKey, displayError) {
+async function setDailyWeather(
+  API_KEY,
+  isMetric,
+  handleSetDays,
+  cityKey,
+  displayError
+) {
   const res = await fetch(
     `https://dataservice.accuweather.com/forecasts/v1/daily/5day/${cityKey}.json?apikey=${API_KEY}`
   );
@@ -70,7 +76,7 @@ async function setDailyWeather(API_KEY, handleSetDays, cityKey, displayError) {
     .json()
     .then(res => {
       if (!res) throw new Error("error: problem fatching daily forecasts");
-      forcatsToDays(res, handleSetDays);
+      forcatsToDays(res, handleSetDays, isMetric);
     })
     .catch(err => {
       displayError("error: problem fatching daily forecasts");
@@ -91,18 +97,41 @@ const getWeekDayName = date => {
   return weekday[date.getDay()];
 };
 
-const forcatsToDays = (data, handleSetDays) => {
+const celsiusToFahrenheit = celsius => {
+  return (celsius * 9) / 5 + 32;
+};
+const fahrenheitToCelsius = fahrenheit => {
+  return ((fahrenheit - 32) * 5) / 9;
+};
+
+const forcatsToDays = (data, handleSetDays, isMetric) => {
   if (data.DailyForecasts) {
     const dailyForecasts = data.DailyForecasts;
     let myList = [];
     for (let i = 0; i < dailyForecasts.length; i++) {
+      let tempMin, tempMax;
+      if (dailyForecasts[i].Temperature.Maximum.Unit === "F") {
+        tempMin = dailyForecasts[i].Temperature.Minimum.Value;
+        tempMax = dailyForecasts[i].Temperature.Maximum.Value;
+        if (isMetric) {
+          tempMin = fahrenheitToCelsius(tempMin);
+          tempMax = fahrenheitToCelsius(tempMax);
+        }
+      } else {
+        tempMin = dailyForecasts[i].Temperature.Minimum.Value;
+        tempMax = dailyForecasts[i].Temperature.Maximum.Value;
+        if (!isMetric) {
+          tempMin = celsiusToFahrenheit(tempMin);
+          tempMax = celsiusToFahrenheit(tempMax);
+        }
+      }
       let dayName = new Date(dailyForecasts[i].Date);
       myList.push({
         id: i,
         image: getWeatherImage(dailyForecasts[i].Day.Icon),
         name: getWeekDayName(dayName),
-        tempMin: dailyForecasts[i].Temperature.Minimum.Value,
-        tempMax: dailyForecasts[i].Temperature.Maximum.Value
+        tempMin: Math.round(tempMin),
+        tempMax: Math.round(tempMax)
       });
     }
     handleSetDays(myList);

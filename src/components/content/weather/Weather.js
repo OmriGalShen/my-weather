@@ -32,8 +32,14 @@ const Weather = props => {
   //update current and daily weather info
   const updateWeatherCallback = useCallback(() => {
     setCurrentWeather(API_KEY, handleSetCityForecast, city.key, displayError);
-    setDailyWeather(API_KEY, handleSetDailyForecast, city.key, displayError);
-  }, [city, API_KEY]);
+    setDailyWeather(
+      API_KEY,
+      isMetric,
+      handleSetDailyForecast,
+      city.key,
+      displayError
+    );
+  }, [city, API_KEY, isMetric]);
 
   //called only at the start of the app
   useEffect(() => updateWeatherCallback(), [updateWeatherCallback]);
