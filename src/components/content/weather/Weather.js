@@ -3,7 +3,12 @@ import "./Weather.css";
 import SearchBox from "./searcbox/SearchBox";
 import CardList from "./cardlist/CardList";
 import CityWeather from "./cityWeather/CityWeather";
-import { setCurrentWeather, setDailyWeather, setCityInfo } from "./utilityData";
+import {
+  setCurrentWeather,
+  setDailyWeather,
+  setCityInfo,
+  autoCompleteList
+} from "./utilityData";
 import { Grid } from "@material-ui/core";
 import Logo from "../../logo/Logo";
 import { Snackbar } from "@material-ui/core";
@@ -22,6 +27,7 @@ const Weather = props => {
   const [cityForecast, setcityForecast] = useState([]); // current city forecast data
   const [openToast, setOpenToast] = useState(false); // boolean of displaying toast message
   const [errorMessage, setErrorMessage] = useState(""); //toast messsage text
+  const [filteredCities, setFilteredCities] = useState([]);
 
   //update current and daily weather info
   const updateWeatherCallback = useCallback(() => {
@@ -73,6 +79,14 @@ const Weather = props => {
   //search field input changed
   const onSearchChange = event => {
     setSearchfield(event.target.value);
+    if (searchfield.length)
+      autoCompleteList(API_KEY, searchfield, handleSetFilteredCities);
+  };
+
+  //change filtered cities list
+  const handleSetFilteredCities = newFilteredCities => {
+    let filteredCitiesCopy = [...newFilteredCities];
+    setFilteredCities(filteredCitiesCopy);
   };
 
   return (
@@ -87,8 +101,11 @@ const Weather = props => {
           </Grid>
           <Grid item xs={12}>
             <SearchBox
+              API_KEY={API_KEY}
               handleSearchSubmit={handleSearchSubmit}
               searchChange={onSearchChange}
+              searchfield={searchfield}
+              filteredCities={filteredCities}
             />
           </Grid>
         </Grid>

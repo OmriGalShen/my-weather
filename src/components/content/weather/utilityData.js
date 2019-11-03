@@ -109,4 +109,22 @@ const forcatsToDays = (data, handleSetDays) => {
   }
 };
 
-export { setCurrentWeather, setDailyWeather, setCityInfo };
+const autoCompleteList = async (API_KEY, cityName, handleSetFilteredCities) => {
+  if (cityName.length) {
+    const cityNameQuery = queryString.stringify({ q: cityName });
+    const res = await fetch(
+      `https://dataservice.accuweather.com/locations/v1/cities/autocomplete?apikey=${API_KEY}&${cityNameQuery}`
+    );
+    res
+      .json()
+      .then(res => {
+        //autocomplete wasn't found
+        if (res) handleSetFilteredCities(res);
+      })
+      .catch(err => {
+        console.log(err);
+      });
+  }
+};
+
+export { setCurrentWeather, setDailyWeather, setCityInfo, autoCompleteList };
