@@ -26,9 +26,3 @@
     rgba(35, 251, 224, 1) 105.1%
   );
 }
-
-@media (max-width: 600px) {
-  .main-container {
-    font-size: 0.8em;
-  }
-}
