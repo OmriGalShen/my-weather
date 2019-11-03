@@ -118,8 +118,8 @@ const autoCompleteList = async (API_KEY, cityName, handleSetFilteredCities) => {
     res
       .json()
       .then(res => {
-        //autocomplete wasn't found
-        if (res) handleSetFilteredCities(res);
+        //autocomplete found
+        if (res[0]) handleSetFilteredCities(res);
       })
       .catch(err => {
         console.log(err);
