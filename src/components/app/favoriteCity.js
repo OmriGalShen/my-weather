@@ -1,18 +1,15 @@
-const favoritesRemove = (city, favCities, setFavCities) => {
-  let favCitiesCopy = favCities.slice();
-  favCitiesCopy = favCitiesCopy.filter(favCity => favCity.key !== city.key);
-  setFavCities(favCitiesCopy);
+const favoritesRemove = (city, favCities, handleSetFavCities) => {
+  favCities = favCities.filter(favCity => favCity.key !== city.key);
+  handleSetFavCities(favCities);
 };
-const favoritesAdd = (city, favCities, setFavCities) => {
-  let favCitiesCopy = favCities.slice();
+const favoritesAdd = (city, favCities, handleSetFavCities) => {
   let cityCopy = Object.assign({}, city);
-  favCitiesCopy.push(cityCopy);
-  setFavCities(favCitiesCopy);
+  favCities.push(cityCopy);
+  handleSetFavCities(favCities);
 };
-const updateFavoriteStatus = (city, setCity) => {
-  let cityCopy = Object.assign({}, city);
-  cityCopy.isFavorite = !city.isFavorite;
-  setCity(cityCopy);
+const updateFavoriteStatus = (city, handleSetCity) => {
+  city.isFavorite = !city.isFavorite;
+  handleSetCity(city);
 };
 
 export { favoritesAdd, favoritesRemove, updateFavoriteStatus };

@@ -2,12 +2,12 @@ import React from "react";
 import Card from "./card/Card";
 import "./CardList.css";
 
-const CardList = ({ days, isMetric }) => {
+const CardList = ({ dailyForecast, isMetric }) => {
   return (
     <div className="card-list shadow-5 white pa4">
       <h1 className="card-list-title">Next 5 days Forecasts </h1>
       <div className="card-list-grid">
-        {days.map((day, ind) => {
+        {dailyForecast.map((day, ind) => {
           return (
             <Card
               key={ind}

@@ -11,53 +11,47 @@ import {
   favoritesRemove,
   updateFavoriteStatus
 } from "./favoriteCity";
+import {
+  API_KEY,
+  DEFAULT_CITY,
+  DEFAULT_FAV_CITIES
+} from "../constants/constants";
 
+//link list for routing
 const linksList = [
   { id: "1", name: "Home", path: "/", component: Weather },
   { id: "2", name: "Favorties", path: "/favorites", component: Favorites },
   { id: "3", name: "Settings", path: "/settings", component: Settings }
 ];
 
-// tel aviv default city
-const DEFAULT_CITY = {
-  key: "215854",
-  name: "Tel Aviv",
-  country: "Israel",
-  isFavorite: true
-};
-
-const DEFAULT_FAV_CITIES = [
-  DEFAULT_CITY,
-  {
-    key: "213225",
-    name: "Jerusalem",
-    country: "Israel",
-    isFavorite: true
-  }
-];
-
 const App = () => {
-  const [isMetric, setIsMetric] = useState(true);
-  const [city, setCity] = useState(DEFAULT_CITY);
-  const [favCities, setFavCities] = useState(DEFAULT_FAV_CITIES);
+  const [isMetric, setIsMetric] = useState(true); //state of units
+  const [city, setCity] = useState(DEFAULT_CITY); //current city
+  const [favCities, setFavCities] = useState(DEFAULT_FAV_CITIES); //list of favorite cities
 
+  //user clicked to change favorite status of current city
   const handleFavorite = e => {
-    // remove city from favorites
     if (city.isFavorite) {
       favoritesRemove(city, favCities, setFavCities);
-    }
-    // add city to favorites
-    else {
+    } else {
       favoritesAdd(city, favCities, setFavCities);
     }
     updateFavoriteStatus(city, setCity);
   };
 
-  const handleCityChoose = favCity => {
-    let cityCopy = Object.assign({}, favCity);
+  //change current city
+  const handleSetCity = newCity => {
+    let cityCopy = Object.assign({}, newCity);
     setCity(cityCopy);
   };
 
+  //change current favorite cities list
+  const handleSetFavCities = newFavCities => {
+    let favCitiesCopy = newFavCities.splice();
+    setFavCities(favCitiesCopy);
+  };
+
+  //user clicked to change current units
   const handleUnitChange = () => {
     setIsMetric(!isMetric);
   };
@@ -78,9 +72,10 @@ const App = () => {
                   {...props}
                   isMetric={isMetric}
                   city={city}
-                  setCity={setCity}
+                  handleSetCity={handleSetCity}
                   handleFavorite={handleFavorite}
                   favCities={favCities}
+                  API_KEY={API_KEY}
                 />
               )}
             />
@@ -91,8 +86,8 @@ const App = () => {
                 <Favorites
                   {...props}
                   favCities={favCities}
-                  setFavCities={setFavCities}
-                  handleCityChoose={handleCityChoose}
+                  handleSetFavCities={handleSetFavCities}
+                  handleSetCity={handleSetCity}
                   cityKey={city.key}
                   favoritesRemove={favoritesRemove}
                 />

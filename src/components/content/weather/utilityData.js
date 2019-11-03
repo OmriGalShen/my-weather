@@ -5,7 +5,7 @@ async function setCityInfo(
   API_KEY,
   cityText,
   city,
-  setCity,
+  handleSetCity,
   favCities,
   displayError
 ) {
@@ -17,23 +17,23 @@ async function setCityInfo(
     res
       .json()
       .then(res => {
+        //city wasn't found
+        if (!res[0]) throw new Error("city wasn't found");
         //city was found
-        if (res[0]) {
-          let newCity = Object.assign({}, city); //make of copy of the city
-          //gives the copy the new data
-          newCity.key = res[0].Key;
-          newCity.name = res[0].LocalizedName;
-          newCity.country = res[0].Country.LocalizedName;
-          newCity.isFavorite = false;
-          //search if the found city is in favorites
-          for (let favCity of favCities) {
-            //if found city is in favorites
-            if (favCity.key === res[0].Key) {
-              newCity.isFavorite = true;
-            }
+        let newCity = Object.assign({}, city); //make of copy of the city
+        //gives the copy the new data
+        newCity.key = res[0].Key;
+        newCity.name = res[0].LocalizedName;
+        newCity.country = res[0].Country.LocalizedName;
+        newCity.isFavorite = false;
+        //search if the found city is in favorites
+        for (let favCity of favCities) {
+          //if found city is in favorites
+          if (favCity.key === res[0].Key) {
+            newCity.isFavorite = true;
           }
-          setCity(newCity);
-        } else throw new Error("city wasn't found");
+        }
+        handleSetCity(newCity);
       })
       .catch(err => {
         console.log(err);
@@ -42,27 +42,40 @@ async function setCityInfo(
   }
 }
 
-async function setCurrentWeather(API_KEY, setCityData, cityKey) {
+async function setCurrentWeather(
+  API_KEY,
+  handleSetCityForecast,
+  cityKey,
+  displayError
+) {
   const res = await fetch(
     `https://dataservice.accuweather.com/currentconditions/v1/${cityKey}.json?apikey=${API_KEY}`
   );
   res
     .json()
     .then(res => {
-      setCityData(res[0]);
+      if (!res[0]) throw new Error("error: problem fatching current weather");
+      handleSetCityForecast(res[0]);
     })
-    .catch(err => console.log);
+    .catch(err => {
+      displayError("error: problem fatching current weather");
+      console.log(err);
+    });
 }
-async function setDailyForecasts(API_KEY, setDays, cityKey) {
+async function setDailyWeather(API_KEY, handleSetDays, cityKey, displayError) {
   const res = await fetch(
     `https://dataservice.accuweather.com/forecasts/v1/daily/5day/${cityKey}.json?apikey=${API_KEY}`
   );
   res
     .json()
     .then(res => {
-      forcatsToDays(res, setDays);
+      if (!res) throw new Error("error: problem fatching daily forecasts");
+      forcatsToDays(res, handleSetDays);
     })
-    .catch(err => console.log);
+    .catch(err => {
+      displayError("error: problem fatching daily forecasts");
+      console.log(err);
+    });
 }
 
 const getWeekDayName = date => {
@@ -78,7 +91,7 @@ const getWeekDayName = date => {
   return weekday[date.getDay()];
 };
 
-const forcatsToDays = (data, setDays) => {
+const forcatsToDays = (data, handleSetDays) => {
   if (data.DailyForecasts) {
     const dailyForecasts = data.DailyForecasts;
     let myList = [];
@@ -92,8 +105,8 @@ const forcatsToDays = (data, setDays) => {
         tempMax: dailyForecasts[i].Temperature.Maximum.Value
       });
     }
-    setDays(myList);
+    handleSetDays(myList);
   }
 };
 
-export { setDailyForecasts, setCurrentWeather, setCityInfo };
+export { setCurrentWeather, setDailyWeather, setCityInfo };

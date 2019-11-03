@@ -11,13 +11,14 @@ import LocationCityIcon from "@material-ui/icons/LocationCity";
 import DeleteIcon from "@material-ui/icons/Delete";
 import FavoriteIcon from "@material-ui/icons/Favorite";
 
-const Favorites = ({
-  favCities,
-  setFavCities,
-  handleCityChoose,
-  cityKey,
-  favoritesRemove
-}) => {
+const Favorites = props => {
+  const {
+    favCities,
+    handleSetFavCities,
+    handleSetCity,
+    cityKey,
+    favoritesRemove
+  } = props;
   return (
     <div className="favorites shaodw-5">
       <div className="favorites-panel shadow-5">
@@ -36,7 +37,7 @@ const Favorites = ({
               <ListItem
                 button
                 key={index}
-                onClick={() => handleCityChoose(favCity)}
+                onClick={() => handleSetCity(favCity)}
                 selected={favCity.key === cityKey}
               >
                 <ListItemIcon>
@@ -48,7 +49,7 @@ const Favorites = ({
                   edge="end"
                   aria-label="delete"
                   onClick={() =>
-                    favoritesRemove(favCity, favCities, setFavCities)
+                    favoritesRemove(favCity, favCities, handleSetFavCities)
                   }
                 >
                   <DeleteIcon />
