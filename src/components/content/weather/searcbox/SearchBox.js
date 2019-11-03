@@ -6,7 +6,7 @@ const SearchBox = ({ searchChange, handleSearchSubmit }) => {
   return (
     <form className="searchbox" onSubmit={handleSearchSubmit}>
       <input
-        className="pa2 ba b--green bg-lightest-blue"
+        className="ba b--green bg-lightest-blue"
         type="search"
         placeholder="search cities.."
         onChange={searchChange}
