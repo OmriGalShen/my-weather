@@ -40,7 +40,7 @@ const SearchBox = props => {
         clearOnEscape={true}
         autoComplete={true}
         options={filteredCities}
-        getOptionLabel={option => option.LocalizedName}
+        getOptionLabel={option => option.EnglishName}
         style={{ width: 300 }}
         renderInput={params => (
           <TextField
