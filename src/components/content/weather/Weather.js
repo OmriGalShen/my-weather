@@ -40,10 +40,12 @@ const Weather = props => {
 
   //user submit new city
   const handleSearchSubmit = e => {
+    setSearchfield(e.target[0].value);
+    let userInput = e.target[0].value;
     e.preventDefault();
     setCityInfo(
       API_KEY,
-      searchfield,
+      userInput,
       city,
       handleSetCity,
       favCities,
@@ -103,7 +105,7 @@ const Weather = props => {
             <SearchBox
               API_KEY={API_KEY}
               handleSearchSubmit={handleSearchSubmit}
-              searchChange={onSearchChange}
+              onSearchChange={onSearchChange}
               searchfield={searchfield}
               filteredCities={filteredCities}
             />
