@@ -27,7 +27,7 @@ const Weather = props => {
   const [cityForecast, setcityForecast] = useState([]); // current city forecast data
   const [openToast, setOpenToast] = useState(false); // boolean of displaying toast message
   const [errorMessage, setErrorMessage] = useState(""); //toast messsage text
-  const [filteredCities, setFilteredCities] = useState([]);
+  const [filteredCities, setFilteredCities] = useState([]); //searchbox filtered city list
 
   //update current and daily weather info
   const updateWeatherCallback = useCallback(() => {
