@@ -31,6 +31,10 @@ const CityWeather = ({ data, isMetric, city, handleFavorite }) => {
       ? data.Temperature.Metric.Value
       : data.Temperature.Imperial.Value;
   }
+  let weatherIcon = 0;
+  if (data.WeatherIcon) {
+    weatherIcon = data.WeatherIcon;
+  }
   return (
     <div className="city-weather-wrapper">
       <div className="tc pa1">
@@ -48,7 +52,11 @@ const CityWeather = ({ data, isMetric, city, handleFavorite }) => {
             <h1 className="city-name-title">{city.name}</h1>
 
             <h2>{data.WeatherText}</h2>
-            <img alt="weather" src={getWeatherImage(1)} />
+            <img
+              className="city-weather-image"
+              alt="weather"
+              src={getWeatherImage(weatherIcon)}
+            />
             <h2>
               {tempVal} {unit}
             </h2>

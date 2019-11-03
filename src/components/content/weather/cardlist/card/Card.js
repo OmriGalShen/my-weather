@@ -8,7 +8,7 @@ const Card = props => {
 
   return (
     <div className="card bg-light-blue dib br3 pa2 ma2 grow bw2 shadow-5">
-      <img src={image} alt="profil pic" />
+      <img className="card-image" src={image} alt="profil pic" />
       <div>
         <h2>{name}</h2>
         <p>

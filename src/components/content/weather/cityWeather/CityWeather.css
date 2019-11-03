@@ -11,6 +11,7 @@
   flex-direction: column;
   justify-content: flex-start;
 }
+
 .city-weather-title {
   font-family: "Raleway";
   margin: 0;
@@ -19,6 +20,11 @@
 .city-name-title {
   font-family: "Raleway";
 }
+
+.city-weather-image {
+  width: 200px;
+}
+
 .city-weather-info {
   display: flex;
   justify-content: center;
