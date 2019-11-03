@@ -25,23 +25,11 @@ const FavoriteButton = ({ checked, handleFavorite }) => {
 
 const CityWeather = ({ data, isMetric, city, handleFavorite }) => {
   const unit = isMetric ? "°C" : "°F";
-  let information = "";
+  let tempVal = 0;
   if (data.Temperature) {
-    const tempVal = isMetric
+    tempVal = isMetric
       ? data.Temperature.Metric.Value
       : data.Temperature.Imperial.Value;
-    information = (
-      <div>
-        <h3 className="city-name-title">{city.country},</h3>
-        <h1 className="city-name-title">{city.name}</h1>
-
-        <h2>{data.WeatherText}</h2>
-        <img alt="weather" src={getWeatherImage(1)} />
-        <h2>
-          {tempVal} {unit}
-        </h2>
-      </div>
-    );
   }
   return (
     <div className="city-weather-wrapper">
@@ -53,7 +41,19 @@ const CityWeather = ({ data, isMetric, city, handleFavorite }) => {
       </div>
       <div className="city-weather white">
         <h1>Now</h1>
-        <div className="city-weather-info">{information}</div>
+        <div className="city-weather-info">
+          {" "}
+          <div>
+            <h3 className="city-name-title">{city.country},</h3>
+            <h1 className="city-name-title">{city.name}</h1>
+
+            <h2>{data.WeatherText}</h2>
+            <img alt="weather" src={getWeatherImage(1)} />
+            <h2>
+              {tempVal} {unit}
+            </h2>
+          </div>
+        </div>
       </div>
     </div>
   );
