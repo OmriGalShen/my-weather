@@ -28,20 +28,20 @@ const useStyles = makeStyles({
 
 const SearchBox = props => {
   const {
-    searchChange,
+    onSearchChange,
     handleSearchSubmit,
     searchfield,
     filteredCities
   } = props;
   const classes = useStyles();
   return (
-    <form className="searchbox" onSubmit={handleSearchSubmit}>
+    <form className="searchbox" onSubmit={handleSearchSubmit} method="post">
       <Autocomplete
-        clearOnEscape={true}
+        autoHightlight={true}
         autoComplete={true}
+        autoSelect={true}
         options={filteredCities}
         getOptionLabel={option => option.LocalizedName}
-        style={{ width: 300 }}
         renderInput={params => (
           <TextField
             {...params}
@@ -49,7 +49,7 @@ const SearchBox = props => {
             fullWidth
             variant="outlined"
             value={searchfield}
-            onChange={searchChange}
+            onChange={onSearchChange}
             InputProps={{
               classes: {
                 notchedOutline: classes.notchedOutline,
