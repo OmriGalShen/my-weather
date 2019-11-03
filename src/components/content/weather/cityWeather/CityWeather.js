@@ -3,6 +3,7 @@ import "./CityWeather.css";
 import { getWeatherImage } from "../../../weatherImages/weatherImages";
 import { FormControlLabel, Checkbox } from "@material-ui/core";
 import { FavoriteBorder, Favorite } from "@material-ui/icons";
+import defaultSource from "../../../../assets/images/logo-01.png";
 
 const FavoriteButton = ({ checked, handleFavorite }) => {
   return (
@@ -35,6 +36,11 @@ const CityWeather = ({ data, isMetric, city, handleFavorite }) => {
   if (data.WeatherIcon) {
     weatherIcon = data.WeatherIcon;
   }
+
+  const addDefaultSrc = ev => {
+    ev.target.src = defaultSource;
+  };
+
   return (
     <div className="city-weather-wrapper">
       <div className="tc pa1">
@@ -56,6 +62,7 @@ const CityWeather = ({ data, isMetric, city, handleFavorite }) => {
               className="city-weather-image"
               alt="weather"
               src={getWeatherImage(weatherIcon)}
+              onError={addDefaultSrc}
             />
             <h2>
               {tempVal} {unit}
