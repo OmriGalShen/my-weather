@@ -6,11 +6,6 @@ import Favorites from "../content/favorites/Favorites";
 import Settings from "../content/settings/Settings";
 import Navbar from "../layout/navbar/Navbar";
 import Footer from "../layout/footer/Footer";
-import {
-  favoritesAdd,
-  favoritesRemove,
-  updateFavoriteStatus
-} from "./favoriteCity";
 import { setCityWithLocation } from "./utility";
 import { DEFAULT_CITY, DEFAULT_FAV_CITIES } from "../../constants/constants";
 
@@ -43,11 +38,10 @@ const App = () => {
   //user clicked to change favorite status of current city
   const handleFavoriteStatus = e => {
     if (city.isFavorite) {
-      favoritesRemove(city, favCities, handleSetFavCities);
+      favoritesRemove(city);
     } else {
-      favoritesAdd(city, favCities, handleSetFavCities);
+      favoritesAdd(city);
     }
-    updateFavoriteStatus(city, handleSetCity);
   };
 
   //change current city
@@ -65,6 +59,29 @@ const App = () => {
   //user clicked to change current units
   const handleUnitChange = () => {
     setIsMetric(!isMetric);
+  };
+
+  //add city to favorite cities list
+  const favoritesRemove = cityToRemove => {
+    let favCitiesCopy = [...favCities];
+    favCitiesCopy = favCitiesCopy.filter(
+      favCity => favCity.key !== cityToRemove.key
+    );
+    handleSetFavCities(favCitiesCopy); //update favorite cities list
+    if (cityToRemove.key === city.key) {
+      city.isFavorite = false;
+      handleSetCity(city); //update current city
+    }
+  };
+  //remove city to favorite cities list
+  const favoritesAdd = cityToAdd => {
+    let cityCopy = Object.assign({}, cityToAdd);
+    favCities.push(cityCopy);
+    handleSetFavCities(favCities); //update favorite cities list
+    if (cityToAdd.key === city.key) {
+      city.isFavorite = true;
+      handleSetCity(city); //update current city
+    }
   };
 
   return (
@@ -96,7 +113,6 @@ const App = () => {
                 <Favorites
                   {...props}
                   favCities={favCities}
-                  handleSetFavCities={handleSetFavCities}
                   handleSetCity={handleSetCity}
                   cityKey={city.key}
                   favoritesRemove={favoritesRemove}

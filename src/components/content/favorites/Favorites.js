@@ -12,13 +12,7 @@ import DeleteIcon from "@material-ui/icons/Delete";
 import FavoriteIcon from "@material-ui/icons/Favorite";
 
 const Favorites = props => {
-  const {
-    favCities,
-    handleSetFavCities,
-    handleSetCity,
-    cityKey,
-    favoritesRemove
-  } = props;
+  const { favCities, handleSetCity, cityKey, favoritesRemove } = props;
   return (
     <div className="favorites shaodw-5">
       <div className="favorites-panel shadow-5">
@@ -48,9 +42,7 @@ const Favorites = props => {
                 <IconButton
                   edge="end"
                   aria-label="delete"
-                  onClick={() =>
-                    favoritesRemove(favCity, favCities, handleSetFavCities)
-                  }
+                  onClick={() => favoritesRemove(favCity)}
                 >
                   <DeleteIcon />
                 </IconButton>
