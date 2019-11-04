@@ -23,11 +23,8 @@ export async function setCityInfo(
 ) {
   if (userInput) {
     const userInputQuery = queryString.stringify({ q: userInput });
-    const res = await fetch(
-      `${AUTOCOMPLETE_URL}?apikey=${API_KEY}&${userInputQuery}` //api request
-    );
-    res
-      .json()
+    fetch(`${AUTOCOMPLETE_URL}?apikey=${API_KEY}&${userInputQuery}`) //api request
+      .then(res => res.json())
       .then(res => {
         //city wasn't found
         if (!res[0]) throw new Error("city wasn't found");
@@ -62,11 +59,8 @@ export async function setCurrentWeather(
   cityKey,
   displayError
 ) {
-  const res = await fetch(
-    `${CURRENT_CONDITION_URL}${cityKey}.json?apikey=${API_KEY}` //api request
-  );
-  res
-    .json()
+  fetch(`${CURRENT_CONDITION_URL}${cityKey}.json?apikey=${API_KEY}`) //api request
+    .then(res => res.json())
     .then(res => {
       //check for respone
       if (!res[0]) throw new Error("error: problem fatching current weather");
@@ -87,9 +81,8 @@ export async function setDailyWeather(
   cityKey,
   displayError
 ) {
-  const res = await fetch(`${FIVE_DAILY_URL}${cityKey}.json?apikey=${API_KEY}`); //api request
-  res
-    .json()
+  fetch(`${FIVE_DAILY_URL}${cityKey}.json?apikey=${API_KEY}`) //api request
+    .then(res => res.json())
     .then(res => {
       //check for respone
       if (!res) throw new Error("error: problem fatching daily forecasts");
@@ -164,14 +157,13 @@ const correctTempUnit = (tempValue, tempUnit, isMetric) => {
 export const autoCompleteList = async (userInput, handleSetFilteredCities) => {
   if (userInput.length > 0) {
     const userInputQuery = queryString.stringify({ q: userInput });
-    const res = await fetch(
-      `${AUTOCOMPLETE_URL}?apikey=${API_KEY}&${userInputQuery}` //api request
-    );
-    res
-      .json()
+    fetch(`${AUTOCOMPLETE_URL}?apikey=${API_KEY}&${userInputQuery}`) //api request
+      .then(res => res.json())
       .then(res => {
         //autocomplete found
-        if (res[0].LocalizedName) handleSetFilteredCities(res);
+        if (!res[0])
+          throw new Error("error: problem fatching autocomplete list");
+        handleSetFilteredCities(res);
       })
       .catch(err => {
         console.log("Error at autoCompleteList");

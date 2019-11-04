@@ -23,11 +23,8 @@ export async function setCityWithLocation(
     const positionQuery = queryString.stringify({
       q: position.coords.latitude + "," + position.coords.longitude
     });
-    const res = await fetch(
-      `${GEOPOSITION_SEARCH_URL}?apikey=${API_KEY}&${positionQuery}` //api request
-    );
-    res
-      .json()
+    fetch(`${GEOPOSITION_SEARCH_URL}?apikey=${API_KEY}&${positionQuery}`) //api request
+      .then(res => res.json())
       .then(res => {
         //city wasn't found
         if (!res.Key) throw new Error("city wasn't found");
@@ -46,11 +43,8 @@ export async function setCityWithLocation(
 async function getNeighborByKey(city, locationKey, handleSetCity, favCities) {
   //check for vaild location
   if (locationKey) {
-    const res = await fetch(
-      `${CITY_NEIGHBORS_URL + locationKey}?apikey=${API_KEY}` //api request
-    );
-    res
-      .json()
+    fetch(`${CITY_NEIGHBORS_URL + locationKey}?apikey=${API_KEY}`) //api request
+      .then(res => res.json())
       .then(res => {
         //city wasn't found
         if (!res[0]) throw new Error("city wasn't found");
