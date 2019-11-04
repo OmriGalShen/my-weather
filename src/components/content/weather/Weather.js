@@ -21,8 +21,8 @@ const Weather = props => {
     handleFavoriteStatus,
     favCities
   } = props;
-  const [searchfield, setSearchfield] = useState(""); // searchfield test
-  const [dailyForecast, setDailyForecasts] = useState([]); //list of 5 days of daily Forecasts
+  const [searchfield, setSearchfield] = useState(""); // searchfield text
+  const [dailyForecast, setDailyForecasts] = useState([]); //list  of daily Forecasts
   const [cityForecast, setcityForecast] = useState([]); // current city forecast data
   const [openToast, setOpenToast] = useState(false); // boolean of displaying toast message
   const [errorMessage, setErrorMessage] = useState(""); //toast messsage text
@@ -34,17 +34,17 @@ const Weather = props => {
     setDailyWeather(isMetric, handleSetDailyForecast, city.key, displayError);
   }, [city, isMetric]);
 
-  //called only at the start of the app
+  //called at the start of the app
   useEffect(() => updateWeatherCallback(), [updateWeatherCallback]);
 
-  //user submit new city
+  //user submited a new city search
   const handleSearchSubmit = e => {
     if (e.target[0]) {
       setSearchfield(e.target[0].value);
-      let userInput = e.target[0].value;
+      let userInput = e.target[0].value; // this is searchbox value text
       e.preventDefault();
-      setCityInfo(userInput, city, handleSetCity, favCities, displayError);
-      updateWeatherCallback();
+      setCityInfo(userInput, city, handleSetCity, favCities, displayError); //update to new city
+      updateWeatherCallback(); //update displayed weather
     }
   };
 
@@ -59,11 +59,13 @@ const Weather = props => {
     let cityForecastCopy = Object.assign({}, newCityForecast);
     setcityForecast(cityForecastCopy);
   };
+
   //display toast with error message
   const displayError = message => {
     setErrorMessage(message);
     setOpenToast(true);
   };
+
   //handle toast message close
   const handleToastClose = (event, reason) => {
     if (reason === "clickaway") {
@@ -72,11 +74,14 @@ const Weather = props => {
 
     setOpenToast(false);
   };
+
   //search field input changed
   const onSearchChange = event => {
     setSearchfield(event.target.value);
-    if (searchfield.length)
+    if (searchfield.length) {
+      //update autocomplete list on  searchbox
       autoCompleteList(searchfield, handleSetFilteredCities);
+    }
   };
 
   //change filtered cities list
