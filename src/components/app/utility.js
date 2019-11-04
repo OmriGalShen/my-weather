@@ -1,7 +1,11 @@
 import queryString from "query-string";
+import {
+  API_KEY,
+  GEOPOSITION_SEARCH_URL,
+  CITY_NEIGHBORS_URL
+} from "../constants/constants";
 
 export async function setCityWithLocation(
-  API_KEY,
   city,
   position,
   handleSetCity,
@@ -12,7 +16,7 @@ export async function setCityWithLocation(
       q: position.coords.latitude + "," + position.coords.longitude
     });
     const res = await fetch(
-      `https://dataservice.accuweather.com/locations/v1/cities/geoposition/search?apikey=${API_KEY}&${positionQuery}`
+      `${GEOPOSITION_SEARCH_URL}?apikey=${API_KEY}&${positionQuery}`
     );
     res
       .json()
@@ -20,15 +24,15 @@ export async function setCityWithLocation(
         //city wasn't found
         if (!res.Key) throw new Error("city wasn't found");
         //city was found
-        getNeighborByKey(API_KEY, city, res.Key, handleSetCity, favCities);
+        getNeighborByKey(city, res.Key, handleSetCity, favCities);
       })
       .catch(err => {
+        console.log("Error at setCityWithLocation");
         console.log(err);
       });
   }
 }
 export async function getNeighborByKey(
-  API_KEY,
   city,
   cityKey,
   handleSetCity,
@@ -36,7 +40,7 @@ export async function getNeighborByKey(
 ) {
   if (cityKey) {
     const res = await fetch(
-      `https://dataservice.accuweather.com/locations/v1/cities/neighbors/${cityKey}?apikey=${API_KEY}`
+      `${CITY_NEIGHBORS_URL + cityKey}?apikey=${API_KEY}`
     );
     res
       .json()
@@ -60,6 +64,7 @@ export async function getNeighborByKey(
         handleSetCity(newCity);
       })
       .catch(err => {
+        console.log("Error at getNeighborByKey");
         console.log(err);
       });
   }

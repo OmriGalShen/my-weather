@@ -12,11 +12,7 @@ import {
   updateFavoriteStatus
 } from "./favoriteCity";
 import { setCityWithLocation } from "./utility";
-import {
-  API_KEY,
-  DEFAULT_CITY,
-  DEFAULT_FAV_CITIES
-} from "../constants/constants";
+import { DEFAULT_CITY, DEFAULT_FAV_CITIES } from "../constants/constants";
 
 //link list for routing
 const linksList = [
@@ -33,7 +29,7 @@ const App = () => {
   useEffect(() => {
     if ("geolocation" in navigator) {
       navigator.geolocation.getCurrentPosition(function(position) {
-        setCityWithLocation(API_KEY, city, position, handleSetCity, favCities);
+        setCityWithLocation(city, position, handleSetCity, favCities);
       });
     } else {
       console.log("didn't get location");
@@ -87,7 +83,6 @@ const App = () => {
                   handleSetCity={handleSetCity}
                   handleFavorite={handleFavorite}
                   favCities={favCities}
-                  API_KEY={API_KEY}
                 />
               )}
             />

@@ -14,14 +14,7 @@ import Logo from "../../logo/Logo";
 import { Snackbar } from "@material-ui/core";
 
 const Weather = props => {
-  const {
-    isMetric,
-    city,
-    handleSetCity,
-    handleFavorite,
-    favCities,
-    API_KEY
-  } = props;
+  const { isMetric, city, handleSetCity, handleFavorite, favCities } = props;
   const [searchfield, setSearchfield] = useState(""); // searchfield test
   const [dailyForecast, setDailyForecasts] = useState([]); //list of 5 days of daily Forecasts
   const [cityForecast, setcityForecast] = useState([]); // current city forecast data
@@ -31,15 +24,9 @@ const Weather = props => {
 
   //update current and daily weather info
   const updateWeatherCallback = useCallback(() => {
-    setCurrentWeather(API_KEY, handleSetCityForecast, city.key, displayError);
-    setDailyWeather(
-      API_KEY,
-      isMetric,
-      handleSetDailyForecast,
-      city.key,
-      displayError
-    );
-  }, [city, API_KEY, isMetric]);
+    setCurrentWeather(handleSetCityForecast, city.key, displayError);
+    setDailyWeather(isMetric, handleSetDailyForecast, city.key, displayError);
+  }, [city, isMetric]);
 
   //called only at the start of the app
   useEffect(() => updateWeatherCallback(), [updateWeatherCallback]);
@@ -50,14 +37,7 @@ const Weather = props => {
       setSearchfield(e.target[0].value);
       let userInput = e.target[0].value;
       e.preventDefault();
-      setCityInfo(
-        API_KEY,
-        userInput,
-        city,
-        handleSetCity,
-        favCities,
-        displayError
-      );
+      setCityInfo(userInput, city, handleSetCity, favCities, displayError);
       updateWeatherCallback();
     }
   };
@@ -90,7 +70,7 @@ const Weather = props => {
   const onSearchChange = event => {
     setSearchfield(event.target.value);
     if (searchfield.length)
-      autoCompleteList(API_KEY, searchfield, handleSetFilteredCities);
+      autoCompleteList(searchfield, handleSetFilteredCities);
   };
 
   //change filtered cities list
@@ -111,7 +91,6 @@ const Weather = props => {
           </Grid>
           <Grid item xs={12}>
             <SearchBox
-              API_KEY={API_KEY}
               handleSearchSubmit={handleSearchSubmit}
               onSearchChange={onSearchChange}
               searchfield={searchfield}
