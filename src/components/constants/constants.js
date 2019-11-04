@@ -1,4 +1,4 @@
-// tel aviv default city
+// default city - tel aviv
 export const DEFAULT_CITY = {
   key: "215854",
   name: "Tel Aviv",
@@ -17,8 +17,11 @@ export const DEFAULT_FAV_CITIES = [
   }
 ];
 
-export const API_KEY = "ukNB5zcIFeb6lFYAHPPeZbxZZNbnWuq4"; //need to be hidden on production
+/* API - This site uses the AcuuWeather api at 'https://developer.accuweather.com/' */
 
+export const API_KEY = "8rKydTMikEv5irNXaT6XwfDAUGp33Azf"; //need to be hidden on production
+
+// api urls
 export const AUTOCOMPLETE_URL =
   "https://dataservice.accuweather.com/locations/v1/cities/autocomplete";
 export const CURRENT_CONDITION_URL =
