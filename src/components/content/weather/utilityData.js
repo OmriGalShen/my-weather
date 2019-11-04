@@ -1,4 +1,7 @@
-import queryString from "query-string";
+/* This site uses the AcuuWeather RESTful API at 'https://developer.accuweather.com/' 
+  This file contains support functions to the 'Weather' component,
+  to access the API data and return/use the needed information*/
+import queryString from "query-string"; //used to convert string to get url query
 import { getWeatherImage } from "../../weatherImages/weatherImages";
 import {
   AUTOCOMPLETE_URL,
@@ -7,7 +10,7 @@ import {
   API_KEY
 } from "../../constants/constants";
 
-async function setCityInfo(
+export async function setCityInfo(
   cityText,
   city,
   handleSetCity,
@@ -48,7 +51,11 @@ async function setCityInfo(
   }
 }
 
-async function setCurrentWeather(handleSetCityForecast, cityKey, displayError) {
+export async function setCurrentWeather(
+  handleSetCityForecast,
+  cityKey,
+  displayError
+) {
   const res = await fetch(
     `${CURRENT_CONDITION_URL}${cityKey}.json?apikey=${API_KEY}`
   );
@@ -64,7 +71,12 @@ async function setCurrentWeather(handleSetCityForecast, cityKey, displayError) {
       displayError("error: problem fatching current weather");
     });
 }
-async function setDailyWeather(isMetric, handleSetDays, cityKey, displayError) {
+export async function setDailyWeather(
+  isMetric,
+  handleSetDays,
+  cityKey,
+  displayError
+) {
   const res = await fetch(`${FIVE_DAILY_URL}${cityKey}.json?apikey=${API_KEY}`);
   res
     .json()
@@ -130,7 +142,7 @@ const forcatsToDays = (data, handleSetDays, isMetric) => {
   }
 };
 
-const autoCompleteList = async (cityName, handleSetFilteredCities) => {
+export const autoCompleteList = async (cityName, handleSetFilteredCities) => {
   if (cityName.length) {
     const cityNameQuery = queryString.stringify({ q: cityName });
     const res = await fetch(
@@ -148,5 +160,3 @@ const autoCompleteList = async (cityName, handleSetFilteredCities) => {
       });
   }
 };
-
-export { setCurrentWeather, setDailyWeather, setCityInfo, autoCompleteList };

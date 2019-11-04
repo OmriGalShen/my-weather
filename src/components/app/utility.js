@@ -1,4 +1,7 @@
-import queryString from "query-string";
+/* This site uses the AcuuWeather RESTful API at 'https://developer.accuweather.com/' 
+  This file contains support functions to the 'App' component,
+  to access the API data and return/use the needed information*/
+import queryString from "query-string"; //used to convert string to get url query
 import {
   API_KEY,
   GEOPOSITION_SEARCH_URL,
