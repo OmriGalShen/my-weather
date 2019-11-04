@@ -26,6 +26,11 @@ const App = () => {
   const [city, setCity] = useState(DEFAULT_CITY); //current city
   const [favCities, setFavCities] = useState(DEFAULT_FAV_CITIES); //list of favorite cities
 
+  /*
+  called only on the component mount
+  ask for user permission for location 
+  if positon is found set current city according to geo-position
+  */
   useEffect(() => {
     if ("geolocation" in navigator) {
       navigator.geolocation.getCurrentPosition(function(position) {
@@ -38,7 +43,7 @@ const App = () => {
   }, []);
 
   //user clicked to change favorite status of current city
-  const handleFavorite = e => {
+  const handleFavoriteStatus = e => {
     if (city.isFavorite) {
       favoritesRemove(city, favCities, handleSetFavCities);
     } else {
@@ -81,7 +86,7 @@ const App = () => {
                   isMetric={isMetric}
                   city={city}
                   handleSetCity={handleSetCity}
-                  handleFavorite={handleFavorite}
+                  handleFavoriteStatus={handleFavoriteStatus}
                   favCities={favCities}
                 />
               )}

@@ -14,7 +14,13 @@ import Logo from "../../logo/Logo";
 import { Snackbar } from "@material-ui/core";
 
 const Weather = props => {
-  const { isMetric, city, handleSetCity, handleFavorite, favCities } = props;
+  const {
+    isMetric,
+    city,
+    handleSetCity,
+    handleFavoriteStatus,
+    favCities
+  } = props;
   const [searchfield, setSearchfield] = useState(""); // searchfield test
   const [dailyForecast, setDailyForecasts] = useState([]); //list of 5 days of daily Forecasts
   const [cityForecast, setcityForecast] = useState([]); // current city forecast data
@@ -103,7 +109,7 @@ const Weather = props => {
             data={cityForecast}
             city={city}
             isMetric={isMetric}
-            handleFavorite={handleFavorite}
+            handleFavoriteStatus={handleFavoriteStatus}
           />
         </Grid>
         <Grid item md={9} xs={12}>

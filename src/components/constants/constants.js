@@ -19,7 +19,7 @@ export const DEFAULT_FAV_CITIES = [
 
 /* API - This site uses the AcuuWeather api at 'https://developer.accuweather.com/' */
 
-export const API_KEY = "8rKydTMikEv5irNXaT6XwfDAUGp33Azf"; //need to be hidden on production
+export const API_KEY = "vjvrrIcLVDyJiGYalGoAzDZnqB7gfJwX"; //need to be hidden on production
 
 // api urls
 export const AUTOCOMPLETE_URL =

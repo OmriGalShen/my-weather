@@ -5,7 +5,7 @@ import { FormControlLabel, Checkbox } from "@material-ui/core";
 import { FavoriteBorder, Favorite } from "@material-ui/icons";
 import defaultSource from "../../../../assets/images/logo-01.png";
 
-const FavoriteButton = ({ checked, handleFavorite }) => {
+const FavoriteButton = ({ checked, handleFavoriteStatus }) => {
   return (
     <FormControlLabel
       control={
@@ -15,7 +15,7 @@ const FavoriteButton = ({ checked, handleFavorite }) => {
           checkedIcon={<Favorite fontSize="large" />}
           value={true}
           checked={checked}
-          onChange={handleFavorite}
+          onChange={handleFavoriteStatus}
         />
       }
       label=""
@@ -24,7 +24,7 @@ const FavoriteButton = ({ checked, handleFavorite }) => {
   );
 };
 
-const CityWeather = ({ data, isMetric, city, handleFavorite }) => {
+const CityWeather = ({ data, isMetric, city, handleFavoriteStatus }) => {
   const unit = isMetric ? "°C" : "°F";
   let tempVal = 0;
   if (data.Temperature) {
@@ -37,8 +37,8 @@ const CityWeather = ({ data, isMetric, city, handleFavorite }) => {
     weatherIcon = data.WeatherIcon;
   }
 
-  const addDefaultSrc = ev => {
-    ev.target.src = defaultSource;
+  const addDefaultSrc = e => {
+    e.target.src = defaultSource;
   };
 
   return (
@@ -46,7 +46,7 @@ const CityWeather = ({ data, isMetric, city, handleFavorite }) => {
       <div className="tc pa1">
         <FavoriteButton
           checked={city.isFavorite}
-          handleFavorite={handleFavorite}
+          handleFavoriteStatus={handleFavoriteStatus}
         />
       </div>
       <div className="city-weather white">

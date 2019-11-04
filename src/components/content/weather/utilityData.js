@@ -1,6 +1,7 @@
-/* This site uses the AcuuWeather RESTful API at 'https://developer.accuweather.com/' 
+/* This site uses the AccuWeather RESTful API at 'https://developer.accuweather.com/' 
   This file contains support functions to the 'Weather' component,
   to access the API data and return/use the needed information*/
+
 import queryString from "query-string"; //used to convert string to get url query
 import { getWeatherImage } from "../../weatherImages/weatherImages";
 import {
@@ -10,17 +11,20 @@ import {
   API_KEY
 } from "../../constants/constants";
 
+/* Using the AccuWeather API and the user input given as a parameter
+  autocomplete to find the city and
+  set the current city of the app */
 export async function setCityInfo(
-  cityText,
+  userInput,
   city,
   handleSetCity,
   favCities,
   displayError
 ) {
-  if (cityText.length > 0) {
-    const cityTextQuery = queryString.stringify({ q: cityText });
+  if (userInput) {
+    const userInputQuery = queryString.stringify({ q: userInput });
     const res = await fetch(
-      `${AUTOCOMPLETE_URL}?apikey=${API_KEY}&${cityTextQuery}`
+      `${AUTOCOMPLETE_URL}?apikey=${API_KEY}&${userInputQuery}` //api request
     );
     res
       .json()
@@ -41,56 +45,93 @@ export async function setCityInfo(
             newCity.isFavorite = true;
           }
         }
-        handleSetCity(newCity);
+        handleSetCity(newCity); // set new city
       })
       .catch(err => {
         console.log("Error at setCityInfo");
         console.log(err);
-        displayError("City wasn't found");
+        displayError("City wasn't found"); //displayed for user
       });
   }
 }
 
+/* Using the AccuWeather API and the city key given as a parameter
+  set city current forecast  */
 export async function setCurrentWeather(
   handleSetCityForecast,
   cityKey,
   displayError
 ) {
   const res = await fetch(
-    `${CURRENT_CONDITION_URL}${cityKey}.json?apikey=${API_KEY}`
+    `${CURRENT_CONDITION_URL}${cityKey}.json?apikey=${API_KEY}` //api request
   );
   res
     .json()
     .then(res => {
+      //check for respone
       if (!res[0]) throw new Error("error: problem fatching current weather");
-      handleSetCityForecast(res[0]);
+      handleSetCityForecast(res[0]); //set city forecast data
     })
     .catch(err => {
       console.log("Error at setCurrentWeather");
       console.log(err);
-      displayError("error: problem fatching current weather");
+      displayError("error: problem fatching current weather"); //displayed for user
     });
 }
+
+/* Using the AccuWeather API and the city key given as a parameter
+  set 5 days forecast  */
 export async function setDailyWeather(
   isMetric,
-  handleSetDays,
+  handleSetDailyForecast,
   cityKey,
   displayError
 ) {
-  const res = await fetch(`${FIVE_DAILY_URL}${cityKey}.json?apikey=${API_KEY}`);
+  const res = await fetch(`${FIVE_DAILY_URL}${cityKey}.json?apikey=${API_KEY}`); //api request
   res
     .json()
     .then(res => {
+      //check for respone
       if (!res) throw new Error("error: problem fatching daily forecasts");
-      forcatsToDays(res, handleSetDays, isMetric);
+      forcatsToDays(res, handleSetDailyForecast, isMetric); // using the api data to set DailyForecast
     })
     .catch(err => {
       console.log("Error at setDailyWeather");
       console.log(err);
-      displayError("error: problem fatching daily forecasts");
+      displayError("error: problem fatching daily forecasts"); //displayed for user
     });
 }
 
+/* After daily forecast data was received this function process the data 
+  and from the useful information create a list of the daily forecast  */
+const forcatsToDays = (data, handleSetDailyForecast, isMetric) => {
+  //check for vaild data
+  if (data.DailyForecasts) {
+    const dailyForecasts = data.DailyForecasts;
+    let myList = []; // initite the retured list
+    for (let i = 0; i < dailyForecasts.length; i++) {
+      let tempUnit = "C";
+      if (dailyForecasts[i].Temperature.Maximum.Unit === "F") tempUnit = "F";
+      let tempMin = dailyForecasts[i].Temperature.Minimum.Value;
+      let tempMax = dailyForecasts[i].Temperature.Maximum.Value;
+      //correct temp to correct unit (celsius/Fahrenheit)
+      tempMin = correctTempUnit(tempMin, tempUnit, isMetric);
+      tempMax = correctTempUnit(tempMax, tempUnit, isMetric);
+      //the data Date proprty is string this converst it to date object
+      let dayName = new Date(dailyForecasts[i].Date);
+      myList.push({
+        id: i,
+        image: getWeatherImage(dailyForecasts[i].Day.Icon),
+        name: getWeekDayName(dayName),
+        tempMin: Math.round(tempMin),
+        tempMax: Math.round(tempMax)
+      });
+    }
+    handleSetDailyForecast(myList); // set daily foracst to the new list
+  }
+};
+
+/* Given Date object returns a string repressing the name of the day of the week */
 const getWeekDayName = date => {
   const weekday = [
     "Sunday",
@@ -111,42 +152,20 @@ const fahrenheitToCelsius = fahrenheit => {
   return ((fahrenheit - 32) * 5) / 9;
 };
 
-const convertToCorrectUnit = (tempValue, tempUnit, isMetric) => {
+const correctTempUnit = (tempValue, tempUnit, isMetric) => {
   if (tempUnit === "C" && !isMetric) tempValue = celsiusToFahrenheit(tempValue);
   else if (tempUnit === "F" && isMetric)
     tempValue = fahrenheitToCelsius(tempValue);
   return tempValue;
 };
 
-const forcatsToDays = (data, handleSetDays, isMetric) => {
-  if (data.DailyForecasts) {
-    const dailyForecasts = data.DailyForecasts;
-    let myList = [];
-    for (let i = 0; i < dailyForecasts.length; i++) {
-      let tempUnit = "C";
-      if (dailyForecasts[i].Temperature.Maximum.Unit === "F") tempUnit = "F";
-      let tempMin = dailyForecasts[i].Temperature.Minimum.Value;
-      let tempMax = dailyForecasts[i].Temperature.Maximum.Value;
-      tempMin = convertToCorrectUnit(tempMin, tempUnit, isMetric);
-      tempMax = convertToCorrectUnit(tempMax, tempUnit, isMetric);
-      let dayName = new Date(dailyForecasts[i].Date);
-      myList.push({
-        id: i,
-        image: getWeatherImage(dailyForecasts[i].Day.Icon),
-        name: getWeekDayName(dayName),
-        tempMin: Math.round(tempMin),
-        tempMax: Math.round(tempMax)
-      });
-    }
-    handleSetDays(myList);
-  }
-};
-
-export const autoCompleteList = async (cityName, handleSetFilteredCities) => {
-  if (cityName.length) {
-    const cityNameQuery = queryString.stringify({ q: cityName });
+/* Using the AccuWeather API and the user input given as a parameter
+  get as a response a list of autocomplete cities and set filtered cities */
+export const autoCompleteList = async (userInput, handleSetFilteredCities) => {
+  if (userInput.length > 0) {
+    const userInputQuery = queryString.stringify({ q: userInput });
     const res = await fetch(
-      `${AUTOCOMPLETE_URL}?apikey=${API_KEY}&${cityNameQuery}`
+      `${AUTOCOMPLETE_URL}?apikey=${API_KEY}&${userInputQuery}` //api request
     );
     res
       .json()

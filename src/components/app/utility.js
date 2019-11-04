@@ -1,33 +1,38 @@
-/* This site uses the AcuuWeather RESTful API at 'https://developer.accuweather.com/' 
+/* This site uses the AccuWeather RESTful API at 'https://developer.accuweather.com/' 
   This file contains support functions to the 'App' component,
   to access the API data and return/use the needed information*/
+
 import queryString from "query-string"; //used to convert string to get url query
+
 import {
   API_KEY,
   GEOPOSITION_SEARCH_URL,
   CITY_NEIGHBORS_URL
 } from "../constants/constants";
 
+/* Using the AccuWeather API and the geo position given as a parameter
+  set the current city to the closest city */
 export async function setCityWithLocation(
   city,
   position,
   handleSetCity,
   favCities
 ) {
+  //basic check if postion is vaild
   if (position.coords.latitude) {
     const positionQuery = queryString.stringify({
       q: position.coords.latitude + "," + position.coords.longitude
     });
     const res = await fetch(
-      `${GEOPOSITION_SEARCH_URL}?apikey=${API_KEY}&${positionQuery}`
+      `${GEOPOSITION_SEARCH_URL}?apikey=${API_KEY}&${positionQuery}` //api request
     );
     res
       .json()
       .then(res => {
         //city wasn't found
         if (!res.Key) throw new Error("city wasn't found");
-        //city was found
-        getNeighborByKey(city, res.Key, handleSetCity, favCities);
+        //city was found set city as a neighbor city
+        getNeighborByKey(city, res.Key, handleSetCity, favCities); //support function
       })
       .catch(err => {
         console.log("Error at setCityWithLocation");
@@ -35,15 +40,14 @@ export async function setCityWithLocation(
       });
   }
 }
-export async function getNeighborByKey(
-  city,
-  cityKey,
-  handleSetCity,
-  favCities
-) {
-  if (cityKey) {
+
+/* Using the AccuWeather API and the location key given as a parameter
+  set the current city of the app to the closest city */
+async function getNeighborByKey(city, locationKey, handleSetCity, favCities) {
+  //check for vaild location
+  if (locationKey) {
     const res = await fetch(
-      `${CITY_NEIGHBORS_URL + cityKey}?apikey=${API_KEY}`
+      `${CITY_NEIGHBORS_URL + locationKey}?apikey=${API_KEY}` //api request
     );
     res
       .json()
