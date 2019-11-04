@@ -11,7 +11,6 @@ const Logo = ({ width }) => {
         className="logo-img"
         style={{ width: width }}
       />
-      {/* <p className="logo-title">MyWeather</p> */}
     </div>
   );
 };

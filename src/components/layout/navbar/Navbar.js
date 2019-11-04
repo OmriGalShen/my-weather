@@ -49,7 +49,6 @@ const useStyles = makeStyles(theme => ({
 }));
 
 const Navbar = ({ linksList }) => {
-  //def state of component
   const [openDrawer, setOpenDrawer] = useState(false);
 
   //get styles
@@ -83,17 +82,10 @@ const Navbar = ({ linksList }) => {
           >
             <MenuIcon />
           </IconButton>
-          {
-            //This is the app logo link
-          }
           <Link to="/" style={{ textDecoration: "none" }}>
             <div>
               <p className="navbar-title grow">MyWeather</p>
             </div>
-            {/* <div className="logo grow">
-              <img alt="logo" src={logo} className="logo-img" />
-              <p className="logo-title">MyWeather</p>
-            </div> */}
           </Link>
           <Typography className={classes.title}></Typography>
           {
