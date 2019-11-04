@@ -45,8 +45,8 @@ export async function setCityInfo(
         handleSetCity(newCity); // set new city
       })
       .catch(err => {
-        console.log("Error at setCityInfo");
-        console.log(err);
+        // console.log("Error at setCityInfo");
+        // console.log(err);
         displayError("City wasn't found"); //displayed for user
       });
   }
@@ -67,8 +67,8 @@ export async function setCurrentWeather(
       handleSetCityForecast(res[0]); //set city forecast data
     })
     .catch(err => {
-      console.log("Error at setCurrentWeather");
-      console.log(err);
+      // console.log("Error at setCurrentWeather");
+      // console.log(err);
       displayError("error: problem fatching current weather"); //displayed for user
     });
 }
@@ -89,8 +89,8 @@ export async function setDailyWeather(
       forcatsToDays(res, handleSetDailyForecast, isMetric); // using the api data to set DailyForecast
     })
     .catch(err => {
-      console.log("Error at setDailyWeather");
-      console.log(err);
+      // console.log("Error at setDailyWeather");
+      // console.log(err);
       displayError("error: problem fatching daily forecasts"); //displayed for user
     });
 }
@@ -166,8 +166,8 @@ export const autoCompleteList = async (userInput, handleSetFilteredCities) => {
         handleSetFilteredCities(res);
       })
       .catch(err => {
-        console.log("Error at autoCompleteList");
-        console.log(err);
+        // console.log("Error at autoCompleteList");
+        // console.log(err);
       });
   }
 };

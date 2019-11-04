@@ -32,8 +32,8 @@ export async function setCityWithLocation(
         getNeighborByKey(city, res.Key, handleSetCity, favCities); //support function
       })
       .catch(err => {
-        console.log("Error at setCityWithLocation");
-        console.log(err);
+        // console.log("Error at setCityWithLocation");
+        // console.log(err);
       });
   }
 }
@@ -65,8 +65,8 @@ async function getNeighborByKey(city, locationKey, handleSetCity, favCities) {
         handleSetCity(newCity);
       })
       .catch(err => {
-        console.log("Error at getNeighborByKey");
-        console.log(err);
+        // console.log("Error at getNeighborByKey");
+        // console.log(err);
       });
   }
 }

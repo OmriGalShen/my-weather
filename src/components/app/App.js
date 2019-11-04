@@ -36,8 +36,6 @@ const App = () => {
       navigator.geolocation.getCurrentPosition(function(position) {
         setCityWithLocation(city, position, handleSetCity, favCities);
       });
-    } else {
-      console.log("didn't get location");
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
