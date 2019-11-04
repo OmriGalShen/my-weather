@@ -46,14 +46,14 @@
   width: 50%;
 }
 
-@media (max-width: 600px) {
+@media (max-width: 1200px) {
   .settings {
     width: 100%;
     font-size: 0.8em;
     padding: 0;
   }
   .setting-list {
-    width: 90%;
+    width: 90vw;
   }
   .settings-panel {
     min-height: 90vh;
