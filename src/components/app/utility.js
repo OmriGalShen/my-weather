@@ -8,7 +8,7 @@ import {
   API_KEY,
   GEOPOSITION_SEARCH_URL,
   CITY_NEIGHBORS_URL
-} from "../constants/constants";
+} from "../../constants/constants";
 
 /* Using the AccuWeather API and the geo position given as a parameter
   set the current city to the closest city */

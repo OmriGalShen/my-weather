@@ -12,7 +12,7 @@ import {
   updateFavoriteStatus
 } from "./favoriteCity";
 import { setCityWithLocation } from "./utility";
-import { DEFAULT_CITY, DEFAULT_FAV_CITIES } from "../constants/constants";
+import { DEFAULT_CITY, DEFAULT_FAV_CITIES } from "../../constants/constants";
 
 //link list for routing
 const linksList = [

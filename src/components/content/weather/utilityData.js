@@ -9,7 +9,7 @@ import {
   CURRENT_CONDITION_URL,
   FIVE_DAILY_URL,
   API_KEY
-} from "../../constants/constants";
+} from "../../../constants/constants";
 
 /* Using the AccuWeather API and the user input given as a parameter
   autocomplete to find the city and
