@@ -15,7 +15,6 @@ const SearchBox = props => {
     <form className="searchbox" onSubmit={handleSearchSubmit} method="post">
       <Autocomplete
         options={filteredCities}
-        getOptionLabel={option => option.LocalizedName}
         renderInput={params => (
           <TextField
             {...params}

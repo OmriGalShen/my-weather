@@ -163,7 +163,9 @@ export const autoCompleteList = async (userInput, handleSetFilteredCities) => {
         //autocomplete found
         if (!res[0])
           throw new Error("error: problem fetching autocomplete list");
-        handleSetFilteredCities(res);
+        let cityNameSuggestion = res.map(city => city.LocalizedName);
+        cityNameSuggestion = [...new Set(cityNameSuggestion)]; //remove duplicates
+        handleSetFilteredCities(cityNameSuggestion);
       })
       .catch(err => {
         // console.log("Error at autoCompleteList");
