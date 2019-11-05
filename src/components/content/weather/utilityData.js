@@ -63,13 +63,13 @@ export async function setCurrentWeather(
     .then(res => res.json())
     .then(res => {
       //check for respone
-      if (!res[0]) throw new Error("error: problem fatching current weather");
+      if (!res[0]) throw new Error("error: problem fetching current weather");
       handleSetCityForecast(res[0]); //set city forecast data
     })
     .catch(err => {
       // console.log("Error at setCurrentWeather");
       // console.log(err);
-      displayError("error: problem fatching current weather"); //displayed for user
+      displayError("error: problem fetching current weather"); //displayed for user
     });
 }
 
@@ -85,13 +85,13 @@ export async function setDailyWeather(
     .then(res => res.json())
     .then(res => {
       //check for respone
-      if (!res) throw new Error("error: problem fatching daily forecasts");
+      if (!res) throw new Error("error: problem fetching daily forecasts");
       forcatsToDays(res, handleSetDailyForecast, isMetric); // using the api data to set DailyForecast
     })
     .catch(err => {
       // console.log("Error at setDailyWeather");
       // console.log(err);
-      displayError("error: problem fatching daily forecasts"); //displayed for user
+      displayError("error: problem fetching daily forecasts"); //displayed for user
     });
 }
 
@@ -162,7 +162,7 @@ export const autoCompleteList = async (userInput, handleSetFilteredCities) => {
       .then(res => {
         //autocomplete found
         if (!res[0])
-          throw new Error("error: problem fatching autocomplete list");
+          throw new Error("error: problem fetching autocomplete list");
         handleSetFilteredCities(res);
       })
       .catch(err => {
