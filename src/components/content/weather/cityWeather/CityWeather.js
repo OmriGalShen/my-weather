@@ -1,9 +1,10 @@
-import React from "react";
+import React, { useContext } from "react";
 import "./CityWeather.css";
 import { getWeatherImage } from "../../../weatherImages/weatherImages";
 import { FormControlLabel, Checkbox } from "@material-ui/core";
 import { FavoriteBorder, Favorite } from "@material-ui/icons";
 import defaultSource from "../../../../assets/images/logo-01.png";
+import { AppContext } from "../../../app/App";
 
 const FavoriteButton = ({ checked, handleFavoriteStatus }) => {
   return (
@@ -24,7 +25,8 @@ const FavoriteButton = ({ checked, handleFavoriteStatus }) => {
   );
 };
 
-const CityWeather = ({ data, isMetric, city, handleFavoriteStatus }) => {
+const CityWeather = ({ data, handleFavoriteStatus }) => {
+  const { city, isMetric } = useContext(AppContext);
   const unit = isMetric ? "°C" : "°F";
   let tempVal = 0;
   if (data.Temperature) {

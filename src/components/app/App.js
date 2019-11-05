@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, createContext } from "react";
 import "./App.css";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import Weather from "../content/weather/Weather";
@@ -8,6 +8,8 @@ import Navbar from "../layout/navbar/Navbar";
 import Footer from "../layout/footer/Footer";
 import { setCityWithLocation } from "./utility";
 import { DEFAULT_CITY, DEFAULT_FAV_CITIES } from "../../constants/constants";
+
+export const AppContext = createContext();
 
 //link list for routing
 const linksList = [
@@ -91,46 +93,39 @@ const App = () => {
           <Navbar linksList={linksList} />
         </div>
         <div className="main-container">
-          <Switch>
-            <Route
-              exact
-              path="/"
-              render={props => (
-                <Weather
-                  {...props}
-                  isMetric={isMetric}
-                  city={city}
-                  handleSetCity={handleSetCity}
-                  handleFavoriteStatus={handleFavoriteStatus}
-                  favCities={favCities}
-                />
-              )}
-            />
-            <Route
-              exact
-              path="/favorites"
-              render={props => (
-                <Favorites
-                  {...props}
-                  favCities={favCities}
-                  handleSetCity={handleSetCity}
-                  cityKey={city.key}
-                  favoritesRemove={favoritesRemove}
-                />
-              )}
-            />
-            <Route
-              exact
-              path="/settings"
-              render={props => (
-                <Settings
-                  {...props}
-                  isMetric={isMetric}
-                  handleUnitChange={handleUnitChange}
-                />
-              )}
-            />
-          </Switch>
+          <AppContext.Provider value={{ city, isMetric, favCities }}>
+            <Switch>
+              <Route
+                exact
+                path="/"
+                render={props => (
+                  <Weather
+                    {...props}
+                    handleSetCity={handleSetCity}
+                    handleFavoriteStatus={handleFavoriteStatus}
+                  />
+                )}
+              />
+              <Route
+                exact
+                path="/favorites"
+                render={props => (
+                  <Favorites
+                    {...props}
+                    handleSetCity={handleSetCity}
+                    favoritesRemove={favoritesRemove}
+                  />
+                )}
+              />
+              <Route
+                exact
+                path="/settings"
+                render={props => (
+                  <Settings {...props} handleUnitChange={handleUnitChange} />
+                )}
+              />
+            </Switch>
+          </AppContext.Provider>
         </div>
         <div className="footer">
           <Footer />

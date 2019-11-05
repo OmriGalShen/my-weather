@@ -1,9 +1,11 @@
-import React from "react";
+import React, { useContext } from "react";
 import "./Card.css";
 import defaultSource from "../../../../../assets/images/logo-01.png";
+import { AppContext } from "../../../../app/App";
 
 const Card = props => {
-  const { name, tempMin, tempMax, image, isMetric } = props;
+  const { name, tempMin, tempMax, image } = props;
+  const { isMetric } = useContext(AppContext);
 
   let symbol = isMetric ? "°C" : "°F";
 

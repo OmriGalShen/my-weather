@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useContext } from "react";
 import "./Favorites.css";
 import {
   List,
@@ -10,9 +10,11 @@ import {
 import LocationCityIcon from "@material-ui/icons/LocationCity";
 import DeleteIcon from "@material-ui/icons/Delete";
 import FavoriteIcon from "@material-ui/icons/Favorite";
+import { AppContext } from "../../app/App";
 
 const Favorites = props => {
-  const { favCities, handleSetCity, cityKey, favoritesRemove } = props;
+  const { handleSetCity, favoritesRemove } = props;
+  const { favCities, city } = useContext(AppContext);
   return (
     <div className="favorites shaodw-5">
       <div className="favorites-panel shadow-5">
@@ -32,7 +34,7 @@ const Favorites = props => {
                 button
                 key={index}
                 onClick={() => handleSetCity(favCity)}
-                selected={favCity.key === cityKey}
+                selected={favCity.key === city.key}
               >
                 <ListItemIcon>
                   <LocationCityIcon style={{ color: "white" }} />

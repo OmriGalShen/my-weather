@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback } from "react";
+import React, { useState, useEffect, useCallback, useContext } from "react";
 import "./Weather.css";
 import SearchBox from "./searcbox/SearchBox";
 import CardList from "./cardlist/CardList";
@@ -12,15 +12,11 @@ import {
 import { Grid } from "@material-ui/core";
 import Logo from "../../logo/Logo";
 import { Snackbar } from "@material-ui/core";
+import { AppContext } from "../../app/App";
 
 const Weather = props => {
-  const {
-    isMetric,
-    city,
-    handleSetCity,
-    handleFavoriteStatus,
-    favCities
-  } = props;
+  const { handleSetCity, handleFavoriteStatus } = props;
+  const { city, favCities, isMetric } = useContext(AppContext);
   const [searchfield, setSearchfield] = useState(""); // searchfield text
   const [dailyForecast, setDailyForecasts] = useState([]); //list  of daily Forecasts
   const [cityForecast, setcityForecast] = useState([]); // current city forecast data
@@ -112,13 +108,11 @@ const Weather = props => {
         <Grid item md={3} xs={12}>
           <CityWeather
             data={cityForecast}
-            city={city}
-            isMetric={isMetric}
             handleFavoriteStatus={handleFavoriteStatus}
           />
         </Grid>
         <Grid item md={9} xs={12}>
-          <CardList dailyForecast={dailyForecast} isMetric={isMetric} />
+          <CardList dailyForecast={dailyForecast} />
         </Grid>
       </Grid>
       <Snackbar

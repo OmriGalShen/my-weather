@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useContext } from "react";
 import "./Settings.css";
 import {
   List,
@@ -10,8 +10,10 @@ import {
 } from "@material-ui/core";
 import AcUnitIcon from "@material-ui/icons/AcUnit";
 import SettingAplicationsIcon from "@material-ui/icons/SettingsApplications";
+import { AppContext } from "../../app/App";
 
-const Settings = ({ isMetric, handleUnitChange }) => {
+const Settings = ({ handleUnitChange }) => {
+  const { isMetric } = useContext(AppContext);
   return (
     <div className="settings">
       <div className="settings-panel shadow-5">
