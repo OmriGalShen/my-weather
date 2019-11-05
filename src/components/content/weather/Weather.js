@@ -41,9 +41,10 @@ const Weather = props => {
   //user submited a new city search
   const handleSearchSubmit = e => {
     e.preventDefault();
-    if (e.target[0]) {
-      setSearchfield(e.target[0].value);
-      let userInput = e.target[0].value; // this is searchbox value text
+    let userInput = searchfield;
+    if (e.target[0] && e.target[0].value.length > 0)
+      userInput = e.target[0].value;
+    if (userInput.length > 0) {
       setCityInfo(
         userInput,
         currentCity,
