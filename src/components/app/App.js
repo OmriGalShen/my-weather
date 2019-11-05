@@ -30,8 +30,6 @@ const App = () => {
     DEFAULT_FAV_CITIES
   ); //list of favorite cities
 
-  useEffect(() => console.log(currentCity), [currentCity]);
-
   /*
   called only on the component mount
   ask for user permission for location 
@@ -59,7 +57,6 @@ const App = () => {
         city: city
       });
       if (city.id === currentCity.id) {
-        console.log("making current city not favorite");
         dispatchCurrentCity({ type: "UNMAKE_FAV" });
       }
     } else {

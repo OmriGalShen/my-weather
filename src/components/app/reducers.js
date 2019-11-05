@@ -13,13 +13,10 @@ export const favoritesReducer = (state, action) => {
 export const currentCityReducer = (state, action) => {
   switch (action.type) {
     case "REPLACE":
-      console.log("replace");
       return { ...action.newCity };
     case "MAKE_FAV":
-      console.log("make fav");
       return { ...state, isFavorite: true };
     case "UNMAKE_FAV":
-      console.log("remove");
       return { ...state, isFavorite: false };
     default:
       throw new Error();
