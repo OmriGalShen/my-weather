@@ -13,10 +13,10 @@ import {
 /* Using the AccuWeather API and the geo position given as a parameter
   set the current city to the closest city */
 export async function setCityWithLocation(
-  city,
+  currentCity,
   position,
-  handleSetCity,
-  favCities
+  dispatchCurrentCity,
+  favorites
 ) {
   //basic check if postion is vaild
   if (position.coords.latitude) {
@@ -29,7 +29,7 @@ export async function setCityWithLocation(
         //city wasn't found
         if (!res.Key) throw new Error("city wasn't found");
         //city was found set city as a neighbor city
-        getNeighborByKey(city, res.Key, handleSetCity, favCities); //support function
+        getNeighborByKey(currentCity, res.Key, dispatchCurrentCity, favorites); //support function
       })
       .catch(err => {
         // console.log("Error at setCityWithLocation");
@@ -40,7 +40,12 @@ export async function setCityWithLocation(
 
 /* Using the AccuWeather API and the location key given as a parameter
   set the current city of the app to the closest city */
-async function getNeighborByKey(city, locationKey, handleSetCity, favCities) {
+async function getNeighborByKey(
+  currentCity,
+  locationKey,
+  dispatchCurrentCity,
+  favorites
+) {
   //check for vaild location
   if (locationKey) {
     fetch(`${CITY_NEIGHBORS_URL + locationKey}?apikey=${API_KEY}`) //api request
@@ -49,20 +54,20 @@ async function getNeighborByKey(city, locationKey, handleSetCity, favCities) {
         //city wasn't found
         if (!res[0]) throw new Error("city wasn't found");
         //city was found
-        let newCity = Object.assign({}, city); //make of copy of the city
+        let newCity = { ...currentCity }; //make of copy of the city
         //gives the copy the new data
         newCity.id = res[0].Key;
         newCity.name = res[0].LocalizedName;
         newCity.country = res[0].Country.LocalizedName;
         newCity.isFavorite = false;
         //search if the found city is in favorites
-        for (let favCity of favCities) {
+        for (let favCity of favorites) {
           //if found city is in favorites
           if (favCity.id === res[0].Key) {
             newCity.isFavorite = true;
           }
         }
-        handleSetCity(newCity);
+        dispatchCurrentCity({ type: "REPLACE", newCity: newCity });
       })
       .catch(err => {
         // console.log("Error at getNeighborByKey");

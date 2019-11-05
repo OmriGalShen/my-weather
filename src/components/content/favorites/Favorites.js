@@ -13,8 +13,18 @@ import FavoriteIcon from "@material-ui/icons/Favorite";
 import { AppContext } from "../../app/App";
 
 const Favorites = props => {
-  const { handleSetCity, favoritesRemove } = props;
-  const { favCities, city } = useContext(AppContext);
+  const {
+    favorites,
+    currentCity,
+    dispatchCurrentCity,
+    changeFavoriteStatus
+  } = useContext(AppContext);
+
+  const handleRemoveClick = (e, favCity) => {
+    e.stopPropagation();
+    changeFavoriteStatus(favCity);
+  };
+
   return (
     <div className="favorites shaodw-5">
       <div className="favorites-panel shadow-5">
@@ -27,14 +37,16 @@ const Favorites = props => {
           View and manage your favorite cities!
         </p>
         <List component="nav" aria-label="favorite cities">
-          {favCities.map((favCity, index) => {
+          {favorites.map((favCity, index) => {
             let itemText = favCity.country + ", " + favCity.name;
             return (
               <ListItem
                 button
                 key={index}
-                onClick={() => handleSetCity(favCity)}
-                selected={favCity.id === city.id}
+                onClick={() =>
+                  dispatchCurrentCity({ type: "REPLACE", newCity: favCity })
+                }
+                selected={favCity.id === currentCity.id}
               >
                 <ListItemIcon>
                   <LocationCityIcon style={{ color: "white" }} />
@@ -44,7 +56,7 @@ const Favorites = props => {
                 <IconButton
                   edge="end"
                   aria-label="delete"
-                  onClick={() => favoritesRemove(favCity)}
+                  onClick={e => handleRemoveClick(e, favCity)}
                 >
                   <DeleteIcon />
                 </IconButton>

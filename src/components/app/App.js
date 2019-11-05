@@ -8,6 +8,7 @@ import Navbar from "../layout/navbar/Navbar";
 import Footer from "../layout/footer/Footer";
 import { setCityWithLocation } from "./utility";
 import { DEFAULT_CITY, DEFAULT_FAV_CITIES } from "../../constants/constants";
+import { favoritesReducer, currentCityReducer } from "./reducers";
 
 export const AppContext = createContext();
 
@@ -18,99 +19,61 @@ const linksList = [
   { id: "3", name: "Settings", path: "/settings", component: Settings }
 ];
 
-const favoritesReducer = (state, action) => {
-  switch (action.type) {
-    case "FAV_ADD":
-      return state.map(todo => {
-        if (todo.id === action.id) {
-          return { ...todo, complete: true };
-        } else {
-          return todo;
-        }
-      });
-    case "FAV_REMOVE":
-      return state.map(todo => {
-        if (todo.id === action.id) {
-          return { ...todo, complete: false };
-        } else {
-          return todo;
-        }
-      });
-    default:
-      throw new Error();
-  }
-};
-
 const App = () => {
   const [isMetric, setIsMetric] = useState(true); //state of units
-  const [city, setCity] = useState(DEFAULT_CITY); //current city
-  const [favCities, setFavCities] = useState(DEFAULT_FAV_CITIES); //list of favorite cities
+  const [currentCity, dispatchCurrentCity] = useReducer(
+    currentCityReducer,
+    DEFAULT_CITY
+  );
   const [favorites, dispatchFavorites] = useReducer(
     favoritesReducer,
     DEFAULT_FAV_CITIES
   ); //list of favorite cities
 
+  useEffect(() => console.log(currentCity), [currentCity]);
+
   /*
   called only on the component mount
   ask for user permission for location 
-  if positon is found set current city according to geo-position
+  if positon is found, set currentCity according to geo-position
   */
   useEffect(() => {
     if ("geolocation" in navigator) {
       navigator.geolocation.getCurrentPosition(function(position) {
-        setCityWithLocation(city, position, handleSetCity, favCities);
+        setCityWithLocation(
+          currentCity,
+          position,
+          dispatchCurrentCity,
+          favorites
+        );
       });
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  //user clicked to change favorite status of current city
-  const handleFavoriteStatus = e => {
+  //user clicked to change favorite status of currentCity
+  const changeFavoriteStatus = city => {
     if (city.isFavorite) {
-      favoritesRemove(city);
+      dispatchFavorites({
+        type: "REMOVE_FAV",
+        city: city
+      });
+      if (city.id === currentCity.id) {
+        console.log("making current city not favorite");
+        dispatchCurrentCity({ type: "UNMAKE_FAV" });
+      }
     } else {
-      favoritesAdd(city);
+      dispatchFavorites({
+        type: "ADD_FAV",
+        city: city
+      });
+      if (city.id === currentCity.id) dispatchCurrentCity({ type: "MAKE_FAV" });
     }
-  };
-
-  //change current city
-  const handleSetCity = newCity => {
-    let cityCopy = Object.assign({}, newCity);
-    setCity(cityCopy);
-  };
-
-  //change current favorite cities list
-  const handleSetFavCities = newFavCities => {
-    let favCitiesCopy = [...newFavCities];
-    setFavCities(favCitiesCopy);
   };
 
   //user clicked to change current units
   const handleUnitChange = () => {
     setIsMetric(!isMetric);
-  };
-
-  //add city to favorite cities list
-  const favoritesRemove = cityToRemove => {
-    let favCitiesCopy = [...favCities];
-    favCitiesCopy = favCitiesCopy.filter(
-      favCity => favCity.id !== cityToRemove.id
-    );
-    handleSetFavCities(favCitiesCopy); //update favorite cities list
-    if (cityToRemove.id === city.id) {
-      city.isFavorite = false;
-      handleSetCity(city); //update current city
-    }
-  };
-  //remove city to favorite cities list
-  const favoritesAdd = cityToAdd => {
-    let cityCopy = Object.assign({}, cityToAdd);
-    favCities.push(cityCopy);
-    handleSetFavCities(favCities); //update favorite cities list
-    if (cityToAdd.id === city.id) {
-      city.isFavorite = true;
-      handleSetCity(city); //update current city
-    }
   };
 
   return (
@@ -120,29 +83,22 @@ const App = () => {
           <Navbar linksList={linksList} />
         </div>
         <div className="main-container">
-          <AppContext.Provider value={{ city, isMetric, favCities }}>
+          <AppContext.Provider
+            value={{
+              currentCity,
+              isMetric,
+              favorites,
+              dispatchFavorites,
+              dispatchCurrentCity,
+              changeFavoriteStatus
+            }}
+          >
             <Switch>
-              <Route
-                exact
-                path="/"
-                render={props => (
-                  <Weather
-                    {...props}
-                    handleSetCity={handleSetCity}
-                    handleFavoriteStatus={handleFavoriteStatus}
-                  />
-                )}
-              />
+              <Route exact path="/" render={props => <Weather {...props} />} />
               <Route
                 exact
                 path="/favorites"
-                render={props => (
-                  <Favorites
-                    {...props}
-                    handleSetCity={handleSetCity}
-                    favoritesRemove={favoritesRemove}
-                  />
-                )}
+                render={props => <Favorites {...props} />}
               />
               <Route
                 exact

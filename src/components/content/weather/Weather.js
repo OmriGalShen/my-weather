@@ -15,8 +15,13 @@ import { Snackbar } from "@material-ui/core";
 import { AppContext } from "../../app/App";
 
 const Weather = props => {
-  const { handleSetCity, handleFavoriteStatus } = props;
-  const { city, favCities, isMetric } = useContext(AppContext);
+  const {
+    favorites,
+    isMetric,
+    currentCity,
+    dispatchCurrentCity,
+    changeFavoriteStatus
+  } = useContext(AppContext);
   const [searchfield, setSearchfield] = useState(""); // searchfield text
   const [dailyForecast, setDailyForecasts] = useState([]); //list  of daily Forecasts
   const [cityForecast, setcityForecast] = useState([]); // current city forecast data
@@ -26,9 +31,9 @@ const Weather = props => {
 
   //update current and daily weather info
   const updateWeatherCallback = useCallback(() => {
-    setCurrentWeather(handleSetCityForecast, city.id, displayError);
-    setDailyWeather(isMetric, handleSetDailyForecast, city.id, displayError);
-  }, [city, isMetric]);
+    setCurrentWeather(setcityForecast, currentCity, displayError);
+    setDailyWeather(isMetric, setDailyForecasts, currentCity, displayError);
+  }, [currentCity, isMetric]);
 
   //called at the start of the app
   useEffect(() => updateWeatherCallback(), [updateWeatherCallback]);
@@ -39,21 +44,15 @@ const Weather = props => {
       setSearchfield(e.target[0].value);
       let userInput = e.target[0].value; // this is searchbox value text
       e.preventDefault();
-      setCityInfo(userInput, city, handleSetCity, favCities, displayError); //update to new city
+      setCityInfo(
+        userInput,
+        currentCity,
+        dispatchCurrentCity,
+        favorites,
+        displayError
+      ); //update to new city
       updateWeatherCallback(); //update displayed weather
     }
-  };
-
-  //change daily forecast list
-  const handleSetDailyForecast = dailyForecast => {
-    let dailyForecastCopy = [...dailyForecast];
-    setDailyForecasts(dailyForecastCopy);
-  };
-
-  //change current city forecast
-  const handleSetCityForecast = newCityForecast => {
-    let cityForecastCopy = Object.assign({}, newCityForecast);
-    setcityForecast(cityForecastCopy);
   };
 
   //display toast with error message
@@ -76,14 +75,8 @@ const Weather = props => {
     setSearchfield(event.target.value);
     if (searchfield.length) {
       //update autocomplete list on  searchbox
-      autoCompleteList(searchfield, handleSetFilteredCities);
+      autoCompleteList(searchfield, setFilteredCities);
     }
-  };
-
-  //change filtered cities list
-  const handleSetFilteredCities = newFilteredCities => {
-    let filteredCitiesCopy = [...newFilteredCities];
-    setFilteredCities(filteredCitiesCopy);
   };
 
   return (
@@ -107,8 +100,8 @@ const Weather = props => {
         </Grid>
         <Grid item md={3} xs={12}>
           <CityWeather
-            data={cityForecast}
-            handleFavoriteStatus={handleFavoriteStatus}
+            cityForecast={cityForecast}
+            changeFavoriteStatus={changeFavoriteStatus}
           />
         </Grid>
         <Grid item md={9} xs={12}>

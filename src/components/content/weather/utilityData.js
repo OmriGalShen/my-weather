@@ -16,9 +16,9 @@ import {
   set the current city of the app */
 export async function setCityInfo(
   userInput,
-  city,
-  handleSetCity,
-  favCities,
+  currentCity,
+  dispatchCurrentCity,
+  favorites,
   displayError
 ) {
   if (userInput) {
@@ -29,20 +29,20 @@ export async function setCityInfo(
         //city wasn't found
         if (!res[0]) throw new Error("city wasn't found");
         //city was found
-        let newCity = Object.assign({}, city); //make of copy of the city
+        let newCity = { ...currentCity }; //make of copy of the city
         //gives the copy the new data
         newCity.id = res[0].Key;
         newCity.name = res[0].LocalizedName;
         newCity.country = res[0].Country.LocalizedName;
         newCity.isFavorite = false;
         //search if the found city is in favorites
-        for (let favCity of favCities) {
+        for (let favCity of favorites) {
           //if found city is in favorites
           if (favCity.id === res[0].Key) {
             newCity.isFavorite = true;
           }
         }
-        handleSetCity(newCity); // set new city
+        dispatchCurrentCity({ type: "REPLACE", newCity: newCity }); // set new city
       })
       .catch(err => {
         // console.log("Error at setCityInfo");
@@ -55,16 +55,22 @@ export async function setCityInfo(
 /* Using the AccuWeather API and the city key given as a parameter
   set city current forecast  */
 export async function setCurrentWeather(
-  handleSetCityForecast,
-  cityId,
+  setCityForecast,
+  currentCity,
   displayError
 ) {
-  fetch(`${CURRENT_CONDITION_URL}${cityId}.json?apikey=${API_KEY}`) //api request
+  fetch(`${CURRENT_CONDITION_URL}${currentCity.id}.json?apikey=${API_KEY}`) //api request
     .then(res => res.json())
     .then(res => {
       //check for respone
       if (!res[0]) throw new Error("error: problem fetching current weather");
-      handleSetCityForecast(res[0]); //set city forecast data
+      let cityForecast = {
+        description: res[0].WeatherText,
+        iconNumber: res[0].WeatherIcon,
+        tempMetric: res[0].Temperature.Metric.Value,
+        tempImperial: res[0].Temperature.Imperial.Value
+      };
+      setCityForecast(cityForecast); //set city forecast data
     })
     .catch(err => {
       // console.log("Error at setCurrentWeather");
@@ -77,16 +83,16 @@ export async function setCurrentWeather(
   set 5 days forecast  */
 export async function setDailyWeather(
   isMetric,
-  handleSetDailyForecast,
-  cityId,
+  setDailyForecast,
+  currentCity,
   displayError
 ) {
-  fetch(`${FIVE_DAILY_URL}${cityId}.json?apikey=${API_KEY}`) //api request
+  fetch(`${FIVE_DAILY_URL}${currentCity.id}.json?apikey=${API_KEY}`) //api request
     .then(res => res.json())
     .then(res => {
       //check for respone
       if (!res) throw new Error("error: problem fetching daily forecasts");
-      forcatsToDays(res, handleSetDailyForecast, isMetric); // using the api data to set DailyForecast
+      forcatsToDays(res, setDailyForecast, isMetric); // using the api data to set DailyForecast
     })
     .catch(err => {
       // console.log("Error at setDailyWeather");
@@ -97,7 +103,7 @@ export async function setDailyWeather(
 
 /* After daily forecast data was received this function process the data 
   and from the useful information create a list of the daily forecast  */
-const forcatsToDays = (data, handleSetDailyForecast, isMetric) => {
+const forcatsToDays = (data, setDailyForecast, isMetric) => {
   //check for vaild data
   if (data.DailyForecasts) {
     const dailyForecasts = data.DailyForecasts;
@@ -120,7 +126,7 @@ const forcatsToDays = (data, handleSetDailyForecast, isMetric) => {
         tempMax: Math.round(tempMax)
       });
     }
-    handleSetDailyForecast(myList); // set daily foracst to the new list
+    setDailyForecast([...myList]); // set daily foracst to the new list
   }
 };
 
@@ -154,7 +160,7 @@ const correctTempUnit = (tempValue, tempUnit, isMetric) => {
 
 /* Using the AccuWeather API and the user input given as a parameter
   get as a response a list of autocomplete cities and set filtered cities */
-export const autoCompleteList = async (userInput, handleSetFilteredCities) => {
+export const autoCompleteList = async (userInput, setFilteredCities) => {
   if (userInput.length > 0) {
     const userInputQuery = queryString.stringify({ q: userInput });
     fetch(`${AUTOCOMPLETE_URL}?apikey=${API_KEY}&${userInputQuery}`) //api request
@@ -165,7 +171,7 @@ export const autoCompleteList = async (userInput, handleSetFilteredCities) => {
           throw new Error("error: problem fetching autocomplete list");
         let cityNameSuggestion = res.map(city => city.LocalizedName);
         cityNameSuggestion = [...new Set(cityNameSuggestion)]; //remove duplicates
-        handleSetFilteredCities(cityNameSuggestion);
+        setFilteredCities(cityNameSuggestion);
       })
       .catch(err => {
         // console.log("Error at autoCompleteList");
