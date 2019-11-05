@@ -1,4 +1,4 @@
-import React, { useState, useEffect, createContext } from "react";
+import React, { useState, useEffect, createContext, useReducer } from "react";
 import "./App.css";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import Weather from "../content/weather/Weather";
@@ -18,10 +18,37 @@ const linksList = [
   { id: "3", name: "Settings", path: "/settings", component: Settings }
 ];
 
+const favoritesReducer = (state, action) => {
+  switch (action.type) {
+    case "FAV_ADD":
+      return state.map(todo => {
+        if (todo.id === action.id) {
+          return { ...todo, complete: true };
+        } else {
+          return todo;
+        }
+      });
+    case "FAV_REMOVE":
+      return state.map(todo => {
+        if (todo.id === action.id) {
+          return { ...todo, complete: false };
+        } else {
+          return todo;
+        }
+      });
+    default:
+      throw new Error();
+  }
+};
+
 const App = () => {
   const [isMetric, setIsMetric] = useState(true); //state of units
   const [city, setCity] = useState(DEFAULT_CITY); //current city
   const [favCities, setFavCities] = useState(DEFAULT_FAV_CITIES); //list of favorite cities
+  const [favorites, dispatchFavorites] = useReducer(
+    favoritesReducer,
+    DEFAULT_FAV_CITIES
+  ); //list of favorite cities
 
   /*
   called only on the component mount
@@ -67,10 +94,10 @@ const App = () => {
   const favoritesRemove = cityToRemove => {
     let favCitiesCopy = [...favCities];
     favCitiesCopy = favCitiesCopy.filter(
-      favCity => favCity.key !== cityToRemove.key
+      favCity => favCity.id !== cityToRemove.id
     );
     handleSetFavCities(favCitiesCopy); //update favorite cities list
-    if (cityToRemove.key === city.key) {
+    if (cityToRemove.id === city.id) {
       city.isFavorite = false;
       handleSetCity(city); //update current city
     }
@@ -80,7 +107,7 @@ const App = () => {
     let cityCopy = Object.assign({}, cityToAdd);
     favCities.push(cityCopy);
     handleSetFavCities(favCities); //update favorite cities list
-    if (cityToAdd.key === city.key) {
+    if (cityToAdd.id === city.id) {
       city.isFavorite = true;
       handleSetCity(city); //update current city
     }

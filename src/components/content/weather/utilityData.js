@@ -31,14 +31,14 @@ export async function setCityInfo(
         //city was found
         let newCity = Object.assign({}, city); //make of copy of the city
         //gives the copy the new data
-        newCity.key = res[0].Key;
+        newCity.id = res[0].Key;
         newCity.name = res[0].LocalizedName;
         newCity.country = res[0].Country.LocalizedName;
         newCity.isFavorite = false;
         //search if the found city is in favorites
         for (let favCity of favCities) {
           //if found city is in favorites
-          if (favCity.key === res[0].Key) {
+          if (favCity.id === res[0].Key) {
             newCity.isFavorite = true;
           }
         }
@@ -56,10 +56,10 @@ export async function setCityInfo(
   set city current forecast  */
 export async function setCurrentWeather(
   handleSetCityForecast,
-  cityKey,
+  cityId,
   displayError
 ) {
-  fetch(`${CURRENT_CONDITION_URL}${cityKey}.json?apikey=${API_KEY}`) //api request
+  fetch(`${CURRENT_CONDITION_URL}${cityId}.json?apikey=${API_KEY}`) //api request
     .then(res => res.json())
     .then(res => {
       //check for respone
@@ -78,10 +78,10 @@ export async function setCurrentWeather(
 export async function setDailyWeather(
   isMetric,
   handleSetDailyForecast,
-  cityKey,
+  cityId,
   displayError
 ) {
-  fetch(`${FIVE_DAILY_URL}${cityKey}.json?apikey=${API_KEY}`) //api request
+  fetch(`${FIVE_DAILY_URL}${cityId}.json?apikey=${API_KEY}`) //api request
     .then(res => res.json())
     .then(res => {
       //check for respone

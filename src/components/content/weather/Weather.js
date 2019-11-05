@@ -26,8 +26,8 @@ const Weather = props => {
 
   //update current and daily weather info
   const updateWeatherCallback = useCallback(() => {
-    setCurrentWeather(handleSetCityForecast, city.key, displayError);
-    setDailyWeather(isMetric, handleSetDailyForecast, city.key, displayError);
+    setCurrentWeather(handleSetCityForecast, city.id, displayError);
+    setDailyWeather(isMetric, handleSetDailyForecast, city.id, displayError);
   }, [city, isMetric]);
 
   //called at the start of the app

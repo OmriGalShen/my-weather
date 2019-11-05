@@ -1,6 +1,6 @@
 // default city - tel aviv
 export const DEFAULT_CITY = {
-  key: "215854",
+  id: "215854",
   name: "Tel Aviv",
   country: "Israel",
   isFavorite: true
@@ -10,7 +10,7 @@ export const DEFAULT_CITY = {
 export const DEFAULT_FAV_CITIES = [
   DEFAULT_CITY,
   {
-    key: "213225",
+    id: "213225",
     name: "Jerusalem",
     country: "Israel",
     isFavorite: true

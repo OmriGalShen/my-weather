@@ -34,7 +34,7 @@ const Favorites = props => {
                 button
                 key={index}
                 onClick={() => handleSetCity(favCity)}
-                selected={favCity.key === city.key}
+                selected={favCity.id === city.id}
               >
                 <ListItemIcon>
                   <LocationCityIcon style={{ color: "white" }} />
