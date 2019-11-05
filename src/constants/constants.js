@@ -1,6 +1,6 @@
 /* This site uses the AccuWeather RESTful API at 'https://developer.accuweather.com/'  */
 
-export const API_KEY = "p89f45RzdiCQxqjFI8ZbalzPP7iYisTT"; //need to be hidden on production
+export const API_KEY = "uKoDjjn8yAzvKIXK7MAVxVLmVBu4GPK4"; //need to be hidden on production
 
 // api urls
 export const AUTOCOMPLETE_URL =
@@ -13,6 +13,8 @@ export const GEOPOSITION_SEARCH_URL =
   "https://dataservice.accuweather.com/locations/v1/cities/geoposition/search";
 export const CITY_NEIGHBORS_URL =
   "https://dataservice.accuweather.com/locations/v1/cities/neighbors/";
+//CORS proxy to get around “No Access-Control-Allow-Origin header”
+export const PROXY_URL = "https://omri-cors-everywhere.herokuapp.com/";
 
 // default city - tel aviv
 export const DEFAULT_CITY = {

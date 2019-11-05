@@ -5,6 +5,7 @@
 import queryString from "query-string"; //used to convert string to get url query
 import { getWeatherImage } from "../../weatherImages/weatherImages";
 import {
+  PROXY_URL,
   AUTOCOMPLETE_URL,
   CURRENT_CONDITION_URL,
   FIVE_DAILY_URL,
@@ -23,7 +24,7 @@ export async function setCityInfo(
 ) {
   if (userInput) {
     const userInputQuery = queryString.stringify({ q: userInput });
-    fetch(`${AUTOCOMPLETE_URL}?apikey=${API_KEY}&${userInputQuery}`) //api request
+    fetch(`${PROXY_URL + AUTOCOMPLETE_URL}?apikey=${API_KEY}&${userInputQuery}`) //api request
       .then(res => res.json())
       .then(res => {
         //city wasn't found
@@ -59,7 +60,11 @@ export async function setCurrentWeather(
   currentCity,
   displayError
 ) {
-  fetch(`${CURRENT_CONDITION_URL}${currentCity.id}.json?apikey=${API_KEY}`) //api request
+  fetch(
+    `${PROXY_URL + CURRENT_CONDITION_URL}${
+      currentCity.id
+    }.json?apikey=${API_KEY}`
+  ) //api request
     .then(res => res.json())
     .then(res => {
       //check for respone
@@ -87,7 +92,7 @@ export async function setDailyWeather(
   currentCity,
   displayError
 ) {
-  fetch(`${FIVE_DAILY_URL}${currentCity.id}.json?apikey=${API_KEY}`) //api request
+  fetch(`${PROXY_URL + FIVE_DAILY_URL}${currentCity.id}.json?apikey=${API_KEY}`) //api request
     .then(res => res.json())
     .then(res => {
       //check for respone
@@ -163,7 +168,7 @@ const correctTempUnit = (tempValue, tempUnit, isMetric) => {
 export const autoCompleteList = async (userInput, setFilteredCities) => {
   if (userInput.length > 0) {
     const userInputQuery = queryString.stringify({ q: userInput });
-    fetch(`${AUTOCOMPLETE_URL}?apikey=${API_KEY}&${userInputQuery}`) //api request
+    fetch(`${PROXY_URL + AUTOCOMPLETE_URL}?apikey=${API_KEY}&${userInputQuery}`) //api request
       .then(res => res.json())
       .then(res => {
         //autocomplete found

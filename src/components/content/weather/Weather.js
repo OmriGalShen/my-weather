@@ -40,10 +40,10 @@ const Weather = props => {
 
   //user submited a new city search
   const handleSearchSubmit = e => {
+    e.preventDefault();
     if (e.target[0]) {
       setSearchfield(e.target[0].value);
       let userInput = e.target[0].value; // this is searchbox value text
-      e.preventDefault();
       setCityInfo(
         userInput,
         currentCity,
@@ -73,7 +73,7 @@ const Weather = props => {
   //search field input changed
   const onSearchChange = event => {
     setSearchfield(event.target.value);
-    if (searchfield.length) {
+    if (searchfield.length > 3) {
       //update autocomplete list on  searchbox
       autoCompleteList(searchfield, setFilteredCities);
     }

@@ -5,6 +5,7 @@
 import queryString from "query-string"; //used to convert string to get url query
 
 import {
+  PROXY_URL,
   API_KEY,
   GEOPOSITION_SEARCH_URL,
   CITY_NEIGHBORS_URL
@@ -23,7 +24,10 @@ export async function setCityWithLocation(
     const positionQuery = queryString.stringify({
       q: position.coords.latitude + "," + position.coords.longitude
     });
-    fetch(`${GEOPOSITION_SEARCH_URL}?apikey=${API_KEY}&${positionQuery}`) //api request
+    fetch(
+      `${PROXY_URL + GEOPOSITION_SEARCH_URL}?apikey=${API_KEY}&${positionQuery}`
+    )
+      //api request
       .then(res => res.json())
       .then(res => {
         //city wasn't found
@@ -48,7 +52,7 @@ async function getNeighborByKey(
 ) {
   //check for vaild location
   if (locationKey) {
-    fetch(`${CITY_NEIGHBORS_URL + locationKey}?apikey=${API_KEY}`) //api request
+    fetch(`${PROXY_URL + CITY_NEIGHBORS_URL + locationKey}?apikey=${API_KEY}`) //api request
       .then(res => res.json())
       .then(res => {
         //city wasn't found
