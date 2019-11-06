@@ -1,6 +1,6 @@
 /* This site uses the AccuWeather RESTful API at 'https://developer.accuweather.com/'  */
 
-export const API_KEY = "BRQL2OIyE7PqI2F2dIBAmileU0N58UFy"; //need to be hidden on production
+export const API_KEY = "iDXWugGSFTTMGB6edlzafPA0GuLh4fYo"; //need to be hidden on production
 
 // api urls
 export const AUTOCOMPLETE_URL =
